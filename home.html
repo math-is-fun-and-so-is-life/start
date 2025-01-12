@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Loading</title>
+  <title>Loading...</title>
   <style>
     body {
       margin: 0;
@@ -39,21 +39,28 @@
       pointer-events: none;
     }
 
-    .loading-container h1 {
+    .loading-container.fade-out .loading-content {
+      display: none;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-content h1 {
       color: white;
       font-size: 2rem;
       margin-bottom: 2rem;
     }
 
-    .loading-container img {
+    .loading-content img {
       max-width: 100%;
       max-height: 50%;
       object-fit: contain;
       animation: loadingAnimation 8s ease-in-out 1;
-    }
-
-    .loading-container.fade-out img {
-      display: none;
     }
 
     @keyframes loadingAnimation {
@@ -83,8 +90,10 @@
 </head>
 <body>
   <div class="loading-container">
-    <h1>Loading...</h1>
-    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNndqdjJkc3h6MDBtbm9zaWs3Zjk3YjRybDZnNnk2aW1ucnJuamFmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XGi7sQQZhEa0z9h99D/giphy.webp" alt="Loading...">
+    <div class="loading-content">
+      <h1>Loading...</h1>
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading...">
+    </div>
   </div>
 
   <script>
