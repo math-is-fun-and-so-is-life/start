@@ -39,15 +39,17 @@
       pointer-events: none;
     }
 
-    .loading-container.fade-out .loading-content {
-      display: none;
-    }
-
     .loading-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      opacity: 1;
+      transition: opacity 8s ease-in-out;
+    }
+
+    .loading-container.fade-out .loading-content {
+      opacity: 0;
     }
 
     .loading-content h1 {
@@ -99,7 +101,15 @@
   <script>
     window.addEventListener('load', function() {
       const loadingContainer = document.querySelector('.loading-container');
+      const loadingContent = document.querySelector('.loading-content');
+
       loadingContainer.classList.add('fade-out');
+      loadingContent.classList.add('fade-out');
+
+      setTimeout(function() {
+        loadingContent.style.display = 'none';
+      }, 8000); // 8 seconds (duration of fade animation)
+
       document.title = 'GhostfaceHD';
     });
   </script>
