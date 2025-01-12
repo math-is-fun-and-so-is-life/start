@@ -13,7 +13,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #3f3132;
+      background: linear-gradient(45deg, #ff0000, #000000);
+      background-size: 200% 200%;
+      animation: gradientAnimation 10s ease infinite;
       overflow: hidden;
     }
 
@@ -24,8 +26,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background-color: #3f3132;
       opacity: 1;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 8s ease-in-out;
     }
 
     .loading-container.fade-out {
@@ -56,6 +59,18 @@
         transform: scale(1);
       }
     }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -73,4 +88,5 @@
   </script>
 </body>
 </html>
+
 
