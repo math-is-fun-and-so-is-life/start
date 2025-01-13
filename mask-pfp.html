@@ -79,135 +79,18 @@
     #pfpsButton {
       background-image: url('https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg');
     }
-
-    .content {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      width: 80%;
-      margin-top: 20px;
-    }
-
-    .content img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 20px;
-    }
-
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .gallery-item {
-      position: relative;
-    }
-
-    .gallery-item img {
-      width: 200px;
-      height: auto;
-    }
-
-    .gallery-item:hover::after {
-      content: attr(data-caption);
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: black;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      white-space: nowrap;
-      opacity: 1;
-    }
   </style>
 </head>
 <body>
-  <div class="logo" onclick="showHome()">
+  <div class="logo">
     <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
   </div>
 
   <div class="divider"></div>
 
-  <div class="button-container" id="buttonContainer">
-    <button id="masksButton" class="button" data-tooltip="Masks" onclick="showContent('masksContent')"></button>
-    <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="showContent('pfpsContent')"></button>
+  <div class="button-container">
+    <button id="masksButton" class="button" data-tooltip="Masks" onclick="location.href='masks.html'"></button>
+    <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="location.href='pfps.html'"></button>
   </div>
-
-  <div id="masksContent" class="content">
-    <h2>Masks</h2>
-    <p>Here you'll find a collection of various Ghostface masks.</p>
-    <div class="gallery">
-      <div class="gallery-item" data-caption="Original Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/Fantasticfaceslrg-1.png" alt="Original Mask">
-      </div>
-      <div class="gallery-item" data-caption="KNB Effects Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/knb-effects-ghost-mask.png" alt="KNB Effects Mask">
-      </div>
-      <div class="gallery-item" data-caption="Scream 2 Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/fearsomefaceslrg-2.png" alt="Scream 2 Mask">
-      </div>
-      <div class="gallery-item" data-caption="Scream 2 Altered Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/fearsomefacesrdslrg-2.png" alt="Scream 2 Altered Mask">
-      </div>
-      <div class="gallery-item" data-caption="Scream 3 Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/ghostfaceoldfontlrg-1.png" alt="Scream 3 Mask">
-      </div>
-      <div class="gallery-item" data-caption="Scream 3 Altered Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/asis97lrg-1.png" alt="Scream 3 Altered Mask">
-      </div>
-      <div class="gallery-item" data-caption="Scream 4 Delux Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/s420production20run20dlx20mask.png" alt="Scream 4 Delux Mask">
-      </div>
-      <div class="gallery-item" data-caption="Wallgreens Ghostface Mask">
-        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/walgreens20rs20lgr.png" alt="Wallgreens Ghostface Mask">
-      </div>
-    </div>
-  </div>
-
-  <div id="pfpsContent" class="content">
-    <h2>Ghostface PFPs</h2>
-    <p>Here you'll find a collection of various Ghostface profile pictures (PFPs).</p>
-    <div class="gallery">
-      <div class="gallery-item" data-caption="Realistic Devil Ghostface">
-        <img src="https://cdn.prod.website-files.com/62bdc93e9cccfb43e155104c/66f0f2c25a070acf6aeba77e_Ghost%20Face%20PFP%20400x400%20(3).png" alt="Realistic Devil Ghostface">
-      </div>
-      <div class="gallery-item" data-caption="Ghostface Busters">
-        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-36.jpg" alt="Ghostface Busters">
-      </div>
-      <div class="gallery-item" data-caption="DBD Ghostface">
-        <img src="https://cdn.prod.website-files.com/62bdc93e9cccfb43e155104c/66f0eb4a3584a52f9d51560f_Ghost%20Face%20PFP%20400x400%20(1).png" alt="DBD Ghostface">
-      </div>
-      <div class="gallery-item" data-caption="Scream Y&B">
-        <img src="https://wallpapers.com/images/hd/horror-film-s-ghostface-pfp-wq62a61lyr53z7op.jpg" alt="Scream Y&B">
-      </div>
-      <div class="gallery-item" data-caption="Wazzup 1">
-        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-5.jpg" alt="Wazzup 1">
-      </div>
-      <div class="gallery-item" data-caption="Wazzup 2">
-        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg" alt="Wazzup 2">
-      </div>
-      <div class="gallery-item" data-caption="Wazzup 3">
-        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e09bdfc4-503d-47f3-a277-46c8e2f15fd0/dgehgot-91c3a381-bb80-4fb1-883e-9327fd1e632d.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNW
-          <div class="gallery-item" data-caption="Wazzup 4"> 
-        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-16.jpg" alt="Wazzup 4"> 
-      </div> 
-    </div> 
-  </div> <script> function showHome() {
-  document.getElementById('masksContent').style.display = 'none'; 
-  document.getElementById('pfpsContent').style.display = 'none'; 
-  document.getElementById('buttonContainer').style.display = 'flex'; }
-    {
-function showContent(contentId) {
-  document.getElementById('masksContent').style.display = 'none'; 
-  document.getElementById('pfpsContent').style.display = 'none'; 
-  document.getElementById('buttonContainer').style.display = 'none'; 
-  document.getElementById(contentId).style.display = 'flex'; 
-}
-  </script> 
-</body> 
+</body>
 </html>
