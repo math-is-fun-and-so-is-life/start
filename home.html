@@ -3,90 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loading...</title>
+  <title>GitHub Loading</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(45deg, #ff0000, #000000);
-      background-size: 200% 200%;
-      animation: gradientAnimation 10s ease infinite;
-      overflow: hidden;
-    }
-
-    .loading-container {
+    /* CSS styles remain the same as before */
+    .button-container {
       position: absolute;
-      top: 0;
-      left: 0;
+      bottom: 20px;
+      display: flex;
+      justify-content: center;
       width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #3f3132;
-      opacity: 1;
-      transition: opacity 8s ease-in-out;
     }
 
-    .loading-container.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loading-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      transition: opacity 8s ease-in-out;
-    }
-
-    .loading-container.fade-out .loading-content {
-      opacity: 0;
-    }
-
-    .loading-content h1 {
+    .button-container button {
+      background-color: #808080;
+      border: none;
       color: white;
-      font-size: 2rem;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 24px;
+      margin: 0 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .creepy-title {
+      font-family: 'Creepy', serif;
+      font-weight: bold;
+      color: #ff0000;
+      font-size: 3rem;
       margin-bottom: 2rem;
     }
 
-    .loading-content img {
-      max-width: 100%;
-      max-height: 50%;
-      object-fit: contain;
-      animation: loadingAnimation 8s ease-in-out 1;
-    }
-
-    @keyframes loadingAnimation {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+    @font-face {
+      font-family: 'Creepy';
+      src: url('https://fonts.googleapis.com/css2?family=Creepy&display=swap');
     }
   </style>
 </head>
@@ -94,8 +46,17 @@
   <div class="loading-container">
     <div class="loading-content">
       <h1>Loading...</h1>
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading...">
+      <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNndqdjJkc3h6MDBtbm9zaWs3Zjk3YjRybDZnNnk2aW1ucnJuamFmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XGi7sQQZhEa0z9h99D/giphy.webp" alt="Loading...">
     </div>
+  </div>
+
+  <div class="creepy-title">Ghostface's World</div>
+
+  <div class="button-container">
+    <button id="gamesButton">🎮</button>
+    <button id="classicsButton">🕹️</button>
+    <button id="moviesButton">📹</button>
+    <button id="masksButton">🎭</button>
   </div>
 
   <script>
@@ -111,7 +72,30 @@
       }, 8000); // 8 seconds (duration of fade animation)
 
       document.title = 'GhostfaceHD';
+
+      // Add click event listeners to the buttons
+      const gamesButton = document.getElementById('gamesButton');
+      const classicsButton = document.getElementById('classicsButton');
+      const moviesButton = document.getElementById('moviesButton');
+      const masksButton = document.getElementById('masksButton');
+
+      gamesButton.addEventListener('click', function() {
+        window.location.href = 'gams.html';
+      });
+
+      classicsButton.addEventListener('click', function() {
+        window.location.href = 'classics.html';
+      });
+
+      moviesButton.addEventListener('click', function() {
+        window.location.href = 'movies.html';
+      });
+
+      masksButton.addEventListener('click', function() {
+        window.location.href = 'masks.html';
+      });
     });
   </script>
 </body>
 </html>
+
