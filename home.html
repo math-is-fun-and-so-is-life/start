@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>loading...</title>
+  <title>Loading...</title>
   <link rel="icon" href="https://i.pinimg.com/736x/4c/03/71/4c0371654e8014a193bb682dbaf568ec.jpg" type="image/jpeg">
   <style>
     body {
@@ -34,12 +34,7 @@
       align-items: center;
       background-color: #3f3132;
       opacity: 1;
-      transition: opacity 8s ease-in-out;
-    }
-
-    .loading-container.fade-out {
-      opacity: 0;
-      pointer-events: none;
+      transition: opacity 2s ease-in-out; /* Transition for fade-out */
     }
 
     .loading-content {
@@ -48,11 +43,7 @@
       justify-content: center;
       align-items: center;
       opacity: 1;
-      transition: opacity 8s ease-in-out;
-    }
-
-    .loading-container.fade-out .loading-content {
-      opacity: 0;
+      transition: opacity 2s ease-in-out;
     }
 
     .loading-content h1 {
@@ -154,22 +145,21 @@
   <script>
     window.addEventListener('load', function() {
       const loadingContainer = document.querySelector('.loading-container');
-      const loadingContent = document.querySelector('.loading-content');
       const creepyTitle = document.querySelector('.creepy-title');
       const buttonContainer = document.querySelector('.button-container');
 
-      loadingContainer.classList.add('fade-out');
-      loadingContent.classList.add('fade-out');
-
+      // Fade out loading container
       setTimeout(function() {
-        loadingContent.style.display = 'none';
-        document.body.style.opacity = 1; // Fade in body
-        creepyTitle.style.opacity = 1; // Fade in title
-        buttonContainer.style.opacity = 1; // Fade in buttons
-      }, 8000); // 8 seconds (duration of fade animation)
-
-      document.title = 'GhostfaceHD';
+        loadingContainer.style.opacity = 0; // Fade out loading container
+        setTimeout(function() {
+          loadingContainer.style.display = 'none'; // Hide loading container
+          document.body.style.opacity = 1; // Fade in body
+          creepyTitle.style.opacity = 1; // Fade in title
+          buttonContainer.style.opacity = 1; // Fade in buttons
+        }, 2000); // Wait for fade-out to complete
+      }, 1000); // Keep loading animation visible for 1 second
     });
   </script>
 </body>
 </html>
+
