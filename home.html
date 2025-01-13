@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loading...</title>
+  <title>Ghostface's World</title>
   <link rel="icon" href="https://i.pinimg.com/736x/4c/03/71/4c0371654e8014a193bb682dbaf568ec.jpg" type="image/jpeg">
   <style>
     body {
@@ -33,7 +33,7 @@
       justify-content: center;
       align-items: center;
       background-color: #3f3132;
-      opacity: 1;
+      opacity: 1; /* Fully visible */
       transition: opacity 2s ease-in-out; /* Transition for fade-out */
     }
 
@@ -43,7 +43,6 @@
       justify-content: center;
       align-items: center;
       opacity: 1;
-      transition: opacity 2s ease-in-out;
     }
 
     .loading-content h1 {
@@ -56,7 +55,7 @@
       max-width: 100%;
       max-height: 50%;
       object-fit: contain;
-      animation: loadingAnimation 8s ease-in-out 1;
+      animation: loadingAnimation 2s ease-in-out infinite; /* Adjusted for visibility */
     }
 
     .creepy-title {
@@ -128,8 +127,8 @@
 <body>
   <div class="loading-container">
     <div class="loading-content">
-      <h1>Loading...</h1>
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading...">
+      <h1>Loading...</h1> <!-- Updated loading text -->
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading..."> <!-- Updated GIF -->
     </div>
   </div>
 
@@ -148,7 +147,7 @@
       const creepyTitle = document.querySelector('.creepy-title');
       const buttonContainer = document.querySelector('.button-container');
 
-      // Fade out loading container
+      // Keep loading animation visible for 1 second
       setTimeout(function() {
         loadingContainer.style.opacity = 0; // Fade out loading container
         setTimeout(function() {
@@ -162,4 +161,3 @@
   </script>
 </body>
 </html>
-
