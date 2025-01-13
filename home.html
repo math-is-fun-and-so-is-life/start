@@ -97,10 +97,30 @@
       cursor: pointer;
       border-radius: 50%; /* Make buttons circular */
       transition: background-color 0.3s; /* Transition for hover effect */
+      position: relative;
     }
 
     .button-container button:hover {
       background-color: #a0a0a0; /* Change color on hover */
+    }
+
+    .button-container button::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .button-container button:hover::after {
+      opacity: 1;
     }
 
     @keyframes loadingAnimation {
@@ -139,10 +159,10 @@
   <div class="creepy-title">Ghostface's World</div>
 
   <div class="button-container">
-    <button id="gamesButton">🎮</button>
-    <button id="classicsButton">🕹️</button>
-    <button id="moviesButton">📹</button>
-    <button id="masksButton">🎭</button>
+    <button id="gamesButton" data-tooltip="Games">🎮</button>
+    <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
+    <button id="moviesButton" data-tooltip="Movies">📹</button>
+    <button id="masksButton" data-tooltip="Ghostface Masks & PFP's">🎭</button>
   </div>
 
   <script>
