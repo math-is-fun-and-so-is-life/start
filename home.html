@@ -157,7 +157,22 @@
           buttonContainer.style.opacity = 1; // Fade in buttons
         }, 2000); // Wait for fade-out to complete
       }, 1000); // Keep loading animation visible for 1 second
+
+      // Add event listeners to buttons for navigation
+      document.getElementById('gamesButton').addEventListener('click', function() {
+        location.href = 'all.html';
+      });
+      document.getElementById('classicsButton').addEventListener('click', function() {
+        location.href = 'classics.html';
+      });
+      document.getElementById('moviesButton').addEventListener('click', function() {
+        location.href = 'flims.html'; // 'flims' as specified
+      });
+      document.getElementById('masksButton').addEventListener('click', function() {
+        location.href = 'mask-pfp.html';
+      });
     });
   </script>
 </body>
 </html>
+
