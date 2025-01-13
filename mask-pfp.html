@@ -19,11 +19,13 @@
 
     .logo {
       margin-top: 20px;
+      cursor: pointer; /* Make the logo clickable */
     }
 
     .logo img {
       max-width: 100%;
       height: auto;
+      width: 300px; /* Enlarge the image */
     }
 
     .divider {
@@ -41,8 +43,8 @@
     }
 
     .button {
-      width: 60px;
-      height: 60px;
+      width: 100px; /* Increase button size */
+      height: 100px; /* Increase button size */
       border: none;
       border-radius: 50%;
       background-size: cover;
@@ -95,13 +97,13 @@
   </style>
 </head>
 <body>
-  <div class="logo">
+  <div class="logo" onclick="showHome()">
     <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
   </div>
 
   <div class="divider"></div>
 
-  <div class="button-container">
+  <div class="button-container" id="buttonContainer">
     <button id="masksButton" class="button" data-tooltip="Masks" onclick="showContent('masksContent')"></button>
     <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="showContent('pfpsContent')"></button>
   </div>
@@ -119,9 +121,16 @@
   </div>
 
   <script>
+    function showHome() {
+      document.getElementById('masksContent').style.display = 'none';
+      document.getElementById('pfpsContent').style.display = 'none';
+      document.getElementById('buttonContainer').style.display = 'flex';
+    }
+
     function showContent(contentId) {
       document.getElementById('masksContent').style.display = 'none';
       document.getElementById('pfpsContent').style.display = 'none';
+      document.getElementById('buttonContainer').style.display = 'none';
 
       document.getElementById(contentId).style.display = 'flex';
     }
