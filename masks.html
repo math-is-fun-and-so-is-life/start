@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghostface Masks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: black; /* Pitch black background */
+      color: white;
+    }
+
+    .logo {
+      margin-top: 20px;
+      cursor: pointer; /* Make the logo clickable */
+    }
+
+    .logo img {
+      max-width: 100%;
+      height: auto;
+      width: 300px; /* Enlarge the image */
+    }
+
+    .divider {
+      width: 80%;
+      height: 2px;
+      background-color: white;
+      margin: 20px 0;
+    }
+
+    .creepy-title {
+      font-family: 'Creepster', sans-serif;
+      font-size: 3rem;
+      color: #ff0000; /* Red color for creepy effect */
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      margin-top: 20px;
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 200px;
+      height: auto;
+    }
+
+    .gallery-item:hover::after {
+      content: attr(data-caption);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo" onclick="location.href='mask-pfp.html'">
+    <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="creepy-title">Masks</div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <h2>Masks</h2>
+    <p>Here you'll find a collection of various Ghostface masks.</p>
+    <div class="gallery">
+      <div class="gallery-item" data-caption="Original Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/Fantasticfaceslrg-1.png" alt="Original Mask">
+      </div>
+      <div class="gallery-item" data-caption="KNB Effects Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/knb-effects-ghost-mask.png" alt="KNB Effects Mask">
+      </div>
+      <div class="gallery-item" data-caption="Scream 2 Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/fearsomefaceslrg-2.png" alt="Scream 2 Mask">
+      </div>
+      <div class="gallery-item" data-caption="Scream 2 Altered Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/fearsomefacesrdslrg-2.png" alt="Scream 2 Altered Mask">
+      </div>
+      <div class="gallery-item" data-caption="Scream 3 Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/ghostfaceoldfontlrg-1.png" alt="Scream 3 Mask">
+      </div>
+      <div class="gallery-item" data-caption="Scream 3 Altered Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/asis97lrg-1.png" alt="Scream 3 Altered Mask">
+      </div>
+      <div class="gallery-item" data-caption="Scream 4 Delux Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/s420production20run20dlx20mask.png" alt="Scream 4 Delux Mask">
+      </div>
+      <div class="gallery-item" data-caption="Wallgreens Ghostface Mask">
+        <img src="https://www.ghostface.co.uk/wp-content/uploads/2016/05/walgreens20rs20lgr.png" alt="Wallgreens Ghostface Mask">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
