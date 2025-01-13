@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghostface PFPs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: black; /* Pitch black background */
+      color: white;
+    }
+
+    .logo {
+      margin-top: 20px;
+      cursor: pointer; /* Make the logo clickable */
+    }
+
+    .logo img {
+      max-width: 100%;
+      height: auto;
+      width: 300px; /* Enlarge the image */
+    }
+
+    .divider {
+      width: 80%;
+      height: 2px;
+      background-color: white;
+      margin: 20px 0;
+    }
+
+    .creepy-title {
+      font-family: 'Creepster', sans-serif;
+      font-size: 3rem;
+      color: #ff0000; /* Red color for creepy effect */
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      margin-top: 20px;
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 200px;
+      height: auto;
+    }
+
+    .gallery-item:hover::after {
+      content: attr(data-caption);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo" onclick="location.href='mask-pfp.html'">
+    <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="creepy-title">Ghostface PFPs</div>
+
+  <div class="divider"></div>
+
+  <div class="content">
+    <h2>Ghostface PFPs</h2>
+    <p>Here you'll find a collection of various Ghostface profile pictures (PFPs).</p>
+    <div class="gallery">
+      <div class="gallery-item" data-caption="Realistic Devil Ghostface">
+        <img src="https://cdn.prod.website-files.com/62bdc93e9cccfb43e155104c/66f0f2c25a070acf6aeba77e_Ghost%20Face%20PFP%20400x400%20(3).png" alt="Realistic Devil Ghostface">
+      </div>
+      <div class="gallery-item" data-caption="Ghostface Busters">
+        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-36.jpg" alt="Ghostface Busters">
+      </div>
+      <div class="gallery-item" data-caption="DBD Ghostface">
+        <img src="https://cdn.prod.website-files.com/62bdc93e9cccfb43e155104c/66f0eb4a3584a52f9d51560f_Ghost%20Face%20PFP%20400x400%20(1).png" alt="DBD Ghostface">
+      </div>
+      <div class="gallery-item" data-caption="Scream Y&B">
+        <img src="https://wallpapers.com/images/hd/horror-film-s-ghostface-pfp-wq62a61lyr53z7op.jpg" alt="Scream Y&B">
+      </div>
+      <div class="gallery-item" data-caption="Wazzup 1">
+        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-5.jpg" alt="Wazzup 1">
+      </div>
+      <div class="gallery-item" data-caption="Wazzup 2">
+        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg" alt="Wazzup 2">
+      </div>
+      <div class="gallery-item" data-caption="Wazzup 3">
+        <img src="https://i.ebayimg.com/images/g/wOYAAOSwqDdhqsI5/s-l400.jpg" alt="Wazzup 3">
+          </div>
+        <div class="gallery-item" data-caption="Wazzup 4">
+        <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-16.jpg" alt="Wazzup 4">
+      </div> 
+    </div> 
+</body> 
+</html>
