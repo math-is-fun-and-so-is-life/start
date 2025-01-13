@@ -65,7 +65,19 @@
       font-size: 3rem;
       margin-bottom: 1rem; /* Adjusted margin */
       opacity: 0; /* Start as invisible */
-      transition: opacity 2s ease-in-out; /* Transition for fade-in */
+      transition: opacity 2s ease-in-out, color 0.5s ease; /* Transitions for fade-in and color change */
+    }
+
+    .creepy-title:hover {
+      color: yellow; /* Change to yellow on hover */
+    }
+
+    .creepy-title:hover::after {
+      content: attr(data-hover-text);
+      color: black;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     .button-container {
@@ -132,7 +144,7 @@
     </div>
   </div>
 
-  <div class="creepy-title">Ghostface's World</div>
+  <div class="creepy-title" data-hover-text="Ghostface's World">Ghostface's World</div>
 
   <div class="button-container">
     <button id="gamesButton">🎮</button>
@@ -175,5 +187,6 @@
   </script>
 </body>
 </html>
+
 
 
