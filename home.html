@@ -127,8 +127,8 @@
 <body>
   <div class="loading-container">
     <div class="loading-content">
-      <h1>Loading...</h1> <!-- Updated loading text -->
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading..."> <!-- Updated GIF -->
+      <h1>Loading...</h1>
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading...">
     </div>
   </div>
 
@@ -147,7 +147,7 @@
       const creepyTitle = document.querySelector('.creepy-title');
       const buttonContainer = document.querySelector('.button-container');
 
-      // Keep loading animation visible for 1 second
+      // Keep loading animation visible for 2 seconds
       setTimeout(function() {
         loadingContainer.style.opacity = 0; // Fade out loading container
         setTimeout(function() {
@@ -156,7 +156,7 @@
           creepyTitle.style.opacity = 1; // Fade in title
           buttonContainer.style.opacity = 1; // Fade in buttons
         }, 2000); // Wait for fade-out to complete
-      }, 1000); // Keep loading animation visible for 1 second
+      }, 2000); // Keep loading animation visible for 2 seconds
 
       // Add event listeners to buttons for navigation
       document.getElementById('gamesButton').addEventListener('click', function() {
@@ -175,4 +175,5 @@
   </script>
 </body>
 </html>
+
 
