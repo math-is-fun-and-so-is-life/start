@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghostface Masks & PFPs</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: black; /* Pitch black background */
+      color: white;
+    }
+
+    .logo {
+      margin-top: 20px;
+    }
+
+    .logo img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .divider {
+      width: 80%;
+      height: 2px;
+      background-color: white;
+      margin: 20px 0;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .button {
+      width: 60px;
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .button::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .button:hover::after {
+      opacity: 1;
+    }
+
+    #masksButton {
+      background-image: url('https://mystickermania.com/cdn/stickers/movies-and-series/scream-ghostface-512x512.png');
+    }
+
+    #pfpsButton {
+      background-image: url('https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg');
+    }
+
+    .content {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 80%;
+      margin-top: 20px;
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="button-container">
+    <button id="masksButton" class="button" data-tooltip="Masks" onclick="showContent('masksContent')"></button>
+    <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="showContent('pfpsContent')"></button>
+  </div>
+
+  <div id="masksContent" class="content">
+    <h2>Masks</h2>
+    <img src="https://mystickermania.com/cdn/stickers/movies-and-series/scream-ghostface-512x512.png" alt="Ghostface Mask">
+    <p>Here you'll find a collection of various Ghostface masks.</p>
+  </div>
+
+  <div id="pfpsContent" class="content">
+    <h2>Ghostface PFPs</h2>
+    <img src="https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg" alt="Ghostface PFP">
+    <p>Here you'll find a collection of various Ghostface profile pictures (PFPs).</p>
+  </div>
+
+  <script>
+    function showContent(contentId) {
+      document.getElementById('masksContent').style.display = 'none';
+      document.getElementById('pfpsContent').style.display = 'none';
+
+      document.getElementById(contentId).style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
