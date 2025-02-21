@@ -67,6 +67,11 @@
       opacity: 0;
       transition: opacity 0.3s;
     }
+
+    .button:hover::after {
+      opacity: 1;
+    }
+
     .home-button {
       position: fixed;
       top: 10px;
@@ -77,31 +82,13 @@
       font-size: 24px;
       padding: 10px;
       cursor: pointer;
-      text-align: center:
-      } 
+      text-align: center;
+    } 
   </style> 
-</head> 
-  <body> 
-    <button class="home-button" onclick="location.href='home.html'">🏠</button>
-  </style>
-</head>
-
-   }
-    
-   <div .button:hover::after {
-      opacity: 1;
-    }
-
-    <div #masksButton {
-      background-image: url('https://mystickermania.com/cdn/stickers/movies-and-series/scream-ghostface-512x512.png');
-    }
-
-    <div #pfpsButton 
-      background-image: url('https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg');
-    }
-  </style>
 </head>
 <body>
+  <button class="home-button" onclick="location.href='home.html'">🏠</button>
+
   <div class="logo">
     <img src="https://static.wikia.nocookie.net/scream/images/1/15/Ghost_Face_logo.png/" alt="Ghost Face Logo">
   </div>
@@ -109,8 +96,8 @@
   <div class="divider"></div>
 
   <div class="button-container">
-    <button id="masksButton" class="button" data-tooltip="Masks" onclick="location.href='masks.html'"></button>
-    <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="location.href='pfps.html'"></button>
+    <button id="masksButton" class="button" data-tooltip="Masks" onclick="location.href='masks.html'" style="background-image: url('https://mystickermania.com/cdn/stickers/movies-and-series/scream-ghostface-512x512.png');"></button>
+    <button id="pfpsButton" class="button" data-tooltip="Ghostface PFPs" onclick="location.href='pfps.html'" style="background-image: url('https://wallpapers-clan.com/wp-content/uploads/2022/07/ghostface-pfp-1.jpg');"></button>
   </div>
 </body>
 </html>
