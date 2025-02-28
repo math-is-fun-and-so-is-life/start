@@ -67,6 +67,23 @@
       opacity: 1;
     }
   </style>
+  <style>
+  .square {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    position: absolute;
+    transition: all 0.5s ease;
+  }
+
+  .container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+
 </head>
 <body>
   <div class="header">Base Games</div>
@@ -80,5 +97,30 @@
     <div class="grid-item" data-tooltip="FNAF 2" onclick="location.href='projects/FNAF2.html'" style="background-image: url('https://static.wikia.nocookie.net/fivenightsatfreddys/images/b/b3/480px-Five_Nights_at_Freddy%27s_2_icon.jpg');"></div>
     <!-- Add more grid items as needed -->
   </div>
+  <script>
+  const container = document.createElement('div');
+  container.className = 'container';
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 10; i++) {
+    const square = document.createElement('div');
+    square.className = 'square';
+    square.style.top = `${Math.random() * 90}vh`;
+    square.style.left = `${Math.random() * 90}vw`;
+    container.appendChild(square);
+  }
+
+  function getDistance(sq1, sq2) {
+    const rect1 = sq1.getBoundingClientRect();
+    const rect2 = sq2.getBoundingClientRect();
+    const dx = (rect1.left + rect1.width / 2) - (rect2.left + rect2.width / 2);
+    const dy = (rect1.top + rect1.height / 2) - (rect2.top + rect2.height / 2);
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function mergeSquares() {
+    const squares = document.querySelectorAll('.square');
+    for (let i = 0; i < squares.length; i++) {
+
 </body>
 </html>
