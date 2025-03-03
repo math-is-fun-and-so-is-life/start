@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granny</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://duckspondwebsite.github.io/play/baldis.html" id="game-frame"></iframe>
+
+    <script>
+        const iframe = document.getElementById('game-frame');
+
+        iframe.addEventListener('load', () => {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.document.addEventListener('click', lockCursor);
+        });
+
+        function lockCursor() {
+            iframe.contentWindow.document.body.requestPointerLock = iframe.contentWindow.document.body.requestPointerLock || iframe.contentWindow.document.body.mozRequestPointerLock || iframe.contentWindow.document.body.webkitRequestPointerLock;
+            iframe.contentWindow.document.body.requestPointerLock();
+        }
+
+        document.addEventListener('pointerlockchange', exitHandler, false);
+        document.addEventListener('mozpointerlockchange', exitHandler, false);
+        document.addEventListener('webkitpointerlockchange', exitHandler, false);
+
+        function exitHandler() {
+            if (document.pointerLockElement === iframe.contentWindow.document.body || document.mozPointerLockElement === iframe.contentWindow.document.body || document.webkitPointerLockElement === iframe.contentWindow.document.body) {
+                console.log('Pointer Lock engaged');
+            } else {
+                console.log('Pointer Lock disengaged');
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === "Escape") {
+                document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock || document.webkitExitPointerLock;
+                document.exitPointerLock();
+            }
+        });
+    </script>
+</body>
+</html>
