@@ -34,6 +34,18 @@
       margin: 20px 0;
     }
 
+    /* Search Bar Styles */
+    #search-bar {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
     .grid-container {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -48,6 +60,7 @@
       cursor: pointer;
       background-size: cover;
       background-position: center;
+      transition: opacity 0.3s ease; /* Add transition for smooth show/hide */
     }
 
     .grid-item::after {
@@ -68,13 +81,19 @@
     .grid-item:hover::after {
       opacity: 1;
     }
- 
-</style>
+
+    /* Hide class for filtering */
+    .hide {
+      display: none !important;
+    }
+
+  </style>
 </head>
 <body>
   <div class="header">Base Games</div>
+  <input type="text" id="search-bar" placeholder="Search for a game...">
   <div class="divider"></div>
-  <div class="grid-container">
+  <div class="grid-container" id="game-grid">
     <!-- Example grid items -->
     <div class="grid-item" data-tooltip="Snow Rider 3D" onclick="location.href='projects/SR3D.html'" style="background-image: url('https://images.sftcdn.net/images/t_app-icon-m/p/882ddfa8-e3b8-4f7f-9ed0-ac2aac04e992/1267793430/snow-rider-3d-3b79a8537ebc414fb4f9672a9b8c68c8-512x512.jpeg');"></div>
     <div class="grid-item" data-tooltip="Google Snake" onclick="location.href='projects/GS.html'" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdbt2FcBN4X5y47vD14GSfdM7ScLfitclGZEJecdIV-UnaQTlQiFCp5fC5Sll46Y5gvp8rxmY0U06njTAij3XcpmGOso10CAUVD0Q_2BLYS6_NFqeMPzJYSOd2ncIR9mYAVPf1F0bjfNNC7jyiErZD8l61zNB98yE_JEIcgXEjcIshgEC2SDR_RnBVkJZj/s218/Google%20Snake%20Icon.png');"></div>
@@ -119,7 +138,30 @@
     <!-- Add more grid items as needed -->
   </div>
   <script>
+      const searchBar = document.getElementById('search-bar');
+      const gridItems = document.querySelectorAll('.grid-item');
+
+      searchBar.addEventListener('input', function() {
+        const searchTerm = searchBar.value.toLowerCase();
+        let foundMatch = false; // Flag to check if any game matches the search
+
+        gridItems.forEach(item => {
+          const tooltip = item.getAttribute('data-tooltip').toLowerCase();
+          if (tooltip.includes(searchTerm)) {
+            item.classList.remove('hide');
+            foundMatch = true; // Set flag to true if a match is found
+          } else {
+            item.classList.add('hide');
+          }
+        });
+
+        // If no match is found, you might want to handle it (e.g., display a message)
+        if (!foundMatch && searchTerm !== '') {
+          // Optional: Display a message indicating no games were found
+          console.log("No games found matching your search.");
+        }
+      });
+  </script>
 
 </body>
 </html>
-
