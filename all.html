@@ -1,167 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base Games</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      background-color: black; /* Pitch black background */
-      color: white;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: black;
+            color: white;
+        }
 
-    .header {
-      font-size: 48px;
-      color: red;
-      text-shadow: 2px 2px 4px #000;
-      margin-top: 20px;
-      text-align: center;
-      font-family: 'Nosifer', cursive;
-    }
+        .header {
+            font-size: 48px;
+            color: red;
+            text-shadow: 2px 2px 4px #000;
+            margin-top: 20px;
+            text-align: center;
+            font-family: 'Nosifer', cursive;
+            position: relative; /* Add this */
+        }
 
-    .divider {
-      width: 80%;
-      height: 2px;
-      background-color: white;
-      margin: 20px 0;
-    }
+        /* Star Styles */
+        #page-star {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
 
-    /* Search Bar Styles */
-    #search-bar {
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 20px;
-      background-color: #333;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+        #page-star.active {
+            color: yellow;
+        }
 
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-      width: 80%;
-    }
+        .divider {
+            width: 80%;
+            height: 2px;
+            background-color: white;
+            margin: 20px 0;
+        }
 
-    .grid-item {
-      width: 100%;
-      padding-top: 100%; /* Maintain square aspect ratio */
-      position: relative;
-      cursor: pointer;
-      background-size: cover;
-      background-position: center;
-      transition: opacity 0.3s ease; /* Add transition for smooth show/hide */
-    }
+        #search-bar {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-    .grid-item::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: black;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            width: 80%;
+        }
 
-    .grid-item:hover::after {
-      opacity: 1;
-    }
+        .grid-item {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s ease;
+        }
 
-    /* Hide class for filtering */
-    .hide {
-      display: none !important;
-    }
+        .grid-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-  </style>
+        .grid-item:hover::after {
+            opacity: 1;
+        }
+
+        .star {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 10; /* Ensure star is above the image */
+        }
+
+        .star.active {
+            color: yellow;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .favorite {
+            /* Style for when the page star is active and showing only favorites */
+        }
+    </style>
 </head>
 <body>
-  <div class="header">Base Games</div>
-  <input type="text" id="search-bar" placeholder="Search for a game...">
-  <div class="divider"></div>
-  <div class="grid-container" id="game-grid">
-    <!-- Example grid items -->
-    <div class="grid-item" data-tooltip="Snow Rider 3D" onclick="location.href='projects/SR3D.html'" style="background-image: url('https://images.sftcdn.net/images/t_app-icon-m/p/882ddfa8-e3b8-4f7f-9ed0-ac2aac04e992/1267793430/snow-rider-3d-3b79a8537ebc414fb4f9672a9b8c68c8-512x512.jpeg');"></div>
-    <div class="grid-item" data-tooltip="Google Snake" onclick="location.href='projects/GS.html'" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdbt2FcBN4X5y47vD14GSfdM7ScLfitclGZEJecdIV-UnaQTlQiFCp5fC5Sll46Y5gvp8rxmY0U06njTAij3XcpmGOso10CAUVD0Q_2BLYS6_NFqeMPzJYSOd2ncIR9mYAVPf1F0bjfNNC7jyiErZD8l61zNB98yE_JEIcgXEjcIshgEC2SDR_RnBVkJZj/s218/Google%20Snake%20Icon.png');"></div>
-    <div class="grid-item" data-tooltip="Papa's Games" onclick="location.href='papa.html'" style="background-image: url('https://i.ytimg.com/vi/5e8rA9vL3Xc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBDVZR1NELf2QgHs3m8hgatv1eGAQ');"></div>
-    <div class="grid-item" data-tooltip="CircleoO" onclick="location.href='projects/CO.html'" style="background-image: url('https://play-lh.googleusercontent.com/402xpuDl6zg0PqhnmVTvJqvaLbQ4ewuk2-S8BQm1l68ddapXfWSy-ngcCByKBmC7ASY');"></div>
-    <div class="grid-item" data-tooltip="Cut The Rope" onclick="location.href='projects/CTR.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/cuttherope/icon.png');"></div>
-    <div class="grid-item" data-tooltip="Baldis Basics" onclick="location.href='projects/BB.html'" style="background-image: url('https://static.wikia.nocookie.net/baldis-basics-in-education-and-learning/images/d/d1/Baldi%27s_Basics_Classic_Cover.png/');"></div>
-    <div class="grid-item" data-tooltip="Drive Mad" onclick="location.href='projects/DM.html'" style="background-image: url('https://static.wikia.nocookie.net/martin-magni/images/2/2e/DriveMad.jpg/');"></div>
-    <div class="grid-item" data-tooltip="Geometry Dash" onclick="location.href='projects/GD.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Logo_of_Geometry_Dash.svg/1200px-Logo_of_Geometry_Dash.svg.png');"></div>
-    <div class="grid-item" data-tooltip="Slope" onclick="location.href='projects/SP.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/slope/slope4.jpeg');"></div>
-    <div class="grid-item" data-tooltip="Stickman Hook" onclick="location.href='projects/SH.html'" style="background-image: url('https://play-lh.googleusercontent.com/yXqBI1Vb1b-xjwmXLE2T7FQbgHIxfvjze1b6jO2aLHfy8Y8ta7NFSEVqZoPHtM2Ajyrl');"></div>
-    <div class="grid-item" data-tooltip="FNAF 1" onclick="location.href='projects/FNAF1.html'" style="background-image: url('https://i1.sndcdn.com/artworks-igwBepuhfs4M5MVr-zEneyg-t500x500.jpg');"></div>
-    <div class="grid-item" data-tooltip="FNAF 2" onclick="location.href='projects/FNAF2.html'" style="background-image: url('https://static.wikia.nocookie.net/fivenightsatfreddys/images/b/b3/480px-Five_Nights_at_Freddy%27s_2_icon.jpg');"></div>
-    <div class="grid-item" data-tooltip="FNAF 3" onclick="location.href='projects/FNAF3.html'" style="background-image: url('https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/7/70/FNaF3_Steam_Greenlight_Icon.png/');"></div>
-    <div class="grid-item" data-tooltip="FNAF 4" onclick="location.href='projects/FNAF4.html'" style="background-image: url('https://static.wikia.nocookie.net/fivenightsatfreddys/images/6/6c/Fnaf_4_desktop_icon.jpg/');"></div>
-    <div class="grid-item" data-tooltip="2048" onclick="location.href='projects/2048.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/2048/icon.png');"></div>
-    <div class="grid-item" data-tooltip="Paper.IO 2" onclick="location.href='projects/PIO2.html'" style="background-image: url('https://play.cluster.ws/icons/paperio.webp');"></div>
-    <div class="grid-item" data-tooltip="Bitlife" onclick="location.href='projects/BL.html'" style="background-image: url('https://play.cluster.ws/icons/bitlife.webp');"></div>
-    <div class="grid-item" data-tooltip="Crossy Road" onclick="location.href='projects/CR.html'" style="background-image: url('https://play.cluster.ws/icons/crossyroad.webp');"></div>
-    <div class="grid-item" data-tooltip="Subway Surfers" onclick="location.href='projects/SS.html'" style="background-image: url('https://e.snmc.io/lk/lv/x/bb7812e01a96321231f2c33973b99489/5282921');"></div>
-    <div class="grid-item" data-tooltip="Friday Night Funkin" onclick="location.href='projects/FNF.html'" style="background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6a69df4f-ca4d-43ec-a2ed-c60b63611e35/dhay1qn-22941ad2-d89d-4f19-af2a-7ccacadd1953.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzZhNjlkZjRmLWNhNGQtNDNlYy1hMmVkLWM2MGI2MzYxMWUzNVwvZGhheTFxbi0yMjk0MWFkMi1kODlkLTRmMTktYWYyYS03Y2NhY2FkZDE5NTMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0._d96MWQC74bZ4il-zAdQ4azWjOBDUoAWLjpVEZLV3sk');"></div>
-    <div class="grid-item" data-tooltip="Bob The Robber 2" onclick="location.href='projects/BTR2.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy_xtRQckjtIJkcIKIegrgpbWGzDEPC_rERQ&s');"></div>
-    <div class="grid-item" data-tooltip="Deepest Sword" onclick="location.href='projects/DS.html'" style="background-image: url('https://play-lh.googleusercontent.com/DxwfTOibQNJDU_DgeF89qaW6Hbax6j1Qqy8NmxmbJF0tHHpX3zOHPBRga7OCl8Uz850');"></div>
-    <div class="grid-item" data-tooltip="Drift Boss" onclick="location.href='projects/DB.html'" style="background-image: url('https://m.media-amazon.com/images/I/71Rvyj1gI1L.png');"></div>
-    <div class="grid-item" data-tooltip="Infinte Craft" onclick="location.href='projects/IC.html'" style="background-image: url('https://images.immediate.co.uk/production/volatile/sites/3/2024/03/Infinite-Craft-Whole-List-21882d0.jpg');"></div>
-    <div class="grid-item" data-tooltip="The Binding Of Issac" onclick="location.href='projects/TBOI.html'" style="background-image: url('https://static.wikia.nocookie.net/character-stats-and-profiles/images/6/6e/Issa.png/');"></div>
-    <div class="grid-item" data-tooltip="Granny" onclick="location.href='projects/GR.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3CsW42ycrC_3Wsbyx_W6PeC2L7yL-ih3U6Iyw-j89TyQg1nI:https://play-lh.googleusercontent.com/yT_LBq_tyKeIDohKDsqN_Qt18jGIPUYIxY2C-1-E2YA9Qd60uZW08pua17qBmIiDPA&s');"></div>
-    <div class="grid-item" data-tooltip="Fruit Ninja" onclick="location.href='projects/FN.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/fruitninja/FruitNinjaTeaser.jpg');"></div>
-    <div class="grid-item" data-tooltip="Gameboy Advanced Emulator" onclick="location.href='projects/GBA.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Nintendo-Game-Boy-Advance-Purple-FL.png');"></div>
-    <div class="grid-item" data-tooltip="Yohoho.io" onclick="location.href='projects/YH.html'" style="background-image: url('https://img02.symbaloo.com/TKhg62XFE5bNO3g03Y2IWQfbBYE=/0x0:162x162/fit-in/162x162/filters:no_upscale()/smarkImages%2Fv1%2F72%2F8d%2F9420fd806867cb950c474427c77ee85397e668423d8ac254d2fa4d0e7b40.png');"></div>
-    <div class="grid-item" data-tooltip="Slow Roads" onclick="location.href='projects/SR.html'" style="background-image: url('https://rocketgames.imgix.net/uploads/games/slow-roads-io/slow-roads-io.adda0e.jpg');"></div>
-    <div class="grid-item" data-tooltip="Time Shooter 2" onclick="location.href='projects/TS2.html'" style="background-image: url('https://rocketgames.imgix.net/uploads/games/time-shooter-2/time-shooter-2.9d7d6d.jpg');"></div>
-    <div class="grid-item" data-tooltip="Flappy Bird" onclick="location.href='projects/FBR.html'" style="background-image: url('https://techcrunch.com/wp-content/uploads/2014/02/flappy.gif');"></div>
-    <div class="grid-item" data-tooltip="Chess" onclick="location.href='projects/CH.html'" style="background-image: url('https://images.chesscomfiles.com/uploads/v1/article/15164.75b875dd.668x375o.8429b40c2838@2x.jpeg');"></div>
-    <div class="grid-item" data-tooltip="Draw Climber" onclick="location.href='projects/DC.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-lCTq42razgj7UWsk9VYUxq0-LfeTDPD2q1p_7DJxGjumAvNA:https://play-lh.googleusercontent.com/70T7qV9LvT2RyB7WtE2Z88I6oZfS6Gq9Wd6mTUbFweoLUHkEjduBsc2rprDuxfa7lw&s');"></div>
-    <div class="grid-item" data-tooltip="Plants VS Zombies" onclick="location.href='projects/PVZ.html'" style="background-image: url('https://m.media-amazon.com/images/I/61Aethog1iL.png');"></div>
-    <div class="grid-item" data-tooltip="Block Blast" onclick="location.href='projects/BLA.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_5UJQ3yDmaVq5OifhMTYKMX3e1fwj_7fql0-oz1EhkLsdi54:https://www.lancerspiritonline.com/wp-content/uploads/2024/12/bloc-blast.png&s');"></div>
-    <div class="grid-item" data-tooltip="Sandtrix" onclick="location.href='projects/ST.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCEkKmeS5pCmiCAwHlZ4Rc2nsLmGc4POV7BuCQ0HVViw4j4B9A:https://play-lh.googleusercontent.com/MGKHztYIuX4xlFlP54oWKZ1usjg9pxH6XV_0VUabcPjeVs6XIzosB14ueK9mCeae-6Q&s');"></div>
-    <div class="grid-item" data-tooltip="Rocket League" onclick="location.href='projects/RL.html'" style="background-image: url('https://imageio.forbes.com/specials-images/imageserve/6526949d330336c4676e8fdd/rocket/960x0.jpg');"></div>
-    <div class="grid-item" data-tooltip="Monkey Mart" onclick="location.href='projects/MM.html'" style="background-image: url('https://play-lh.googleusercontent.com/rWReIdyvDaYJPeOxn7hbC0b-96ixGpQKM_EndiQa3SUME8TtI_rNUcI4qsw5teK9mqk');"></div>
-    <div class="grid-item" data-tooltip="Pac-Man" onclick="location.href='projects/PM.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Original_PacMan.svg/220px-Original_PacMan.svg.png');"></div>
-    <!-- Add more grid items as needed -->
-  </div>
-  <script>
-      const searchBar = document.getElementById('search-bar');
-      const gridItems = document.querySelectorAll('.grid-item');
+    <div class="header">
+        Base Games
+        <i class="fa-regular fa-star" id="page-star" onclick="toggleFavorites()"></i>
+    </div>
+    <input type="text" id="search-bar" placeholder="Search for a game...">
+    <div class="divider"></div>
+    <div class="grid-container" id="game-grid">
+        <!-- Example grid items -->
+        <div class="grid-item" data-tooltip="Snow Rider 3D" onclick="location.href='projects/SR3D.html'" style="background-image: url('https://images.sftcdn.net/images/t_app-icon-m/p/882ddfa8-e3b8-4f7f-9ed0-ac2aac04e992/1267793430/snow-rider-3d-3b79a8537ebc414fb4f9672a9b8c68c8-512x512.jpeg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Snow Rider 3D')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Google Snake" onclick="location.href='projects/GS.html'" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdbt2FcBN4X5y47vD14GSfdM7ScLfitclGZEJecdIV-UnaQTlQiFCp5fC5Sll46Y5gvp8rxmY0U06njTAij3XcpmGOso10CAUVD0Q_2BLYS6_NFqeMPzJYSOd2ncIR9mYAVPf1F0bjfNNC7jyiErZD8l61zNB98yE_JEIcgXEjcIshgEC2SDR_RnBVkJZj/s218/Google%20Snake%20Icon.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Google Snake')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Papa's Games" onclick="location.href='papa.html'" style="background-image: url('https://i.ytimg.com/vi/5e8rA9vL3Xc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBDVZR1NELf2QgHs3m8hgatv1eGAQ');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Papa\'s Games')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="CircleoO" onclick="location.href='projects/CO.html'" style="background-image: url('https://play-lh.googleusercontent.com/402xpuDl6zg0PqhnmVTvJqvaLbQ4ewuk2-S8BQm1l68ddapXfWSy-ngcCByKBmC7ASY');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'CircleoO')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Cut The Rope" onclick="location.href='projects/CTR.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/cuttherope/icon.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Cut The Rope')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Baldis Basics" onclick="location.href='projects/BB.html'" style="background-image: url('https://static.wikia.nocookie.net/baldis-basics-in-education-and-learning/images/d/d1/Baldi%27s_Basics_Classic_Cover.png/');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Baldis Basics')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Drive Mad" onclick="location.href='projects/DM.html'" style="background-image: url('https://static.wikia.nocookie.net/martin-magni/images/2/2e/DriveMad.jpg/');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Drive Mad')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Geometry Dash" onclick="location.href='projects/GD.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Logo_of_Geometry_Dash.svg/1200px-Logo_of_Geometry_Dash.svg.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Geometry Dash')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Slope" onclick="location.href='projects/SP.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/slope/slope4.jpeg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Slope')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Stickman Hook" onclick="location.href='projects/SH.html'" style="background-image: url('https://play-lh.googleusercontent.com/yXqBI1Vb1b-xjwmXLE2T7FQbgHIxfvjze1b6jO2aLHfy8Y8ta7NFSEVqZoPHtM2Ajyrl');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Stickman Hook')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="FNAF 1" onclick="location.href='projects/FNAF1.html'" style="background-image: url('https://i1.sndcdn.com/artworks-igwBepuhfs4M5MVr-zEneyg-t500x500.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'FNAF 1')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="FNAF 2" onclick="location.href='projects/FNAF2.html'" style="background-image: url('https://static.wikia.nocookie.net/fivenightsatfreddys/images/b/b3/480px-Five_Nights_at_Freddy%27s_2_icon.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'FNAF 2')"></i>
+        </div>
+         <div class="grid-item" data-tooltip="FNAF 3" onclick="location.href='projects/FNAF3.html'" style="background-image: url('https://static.wikia.nocookie.net/freddy-fazbears-pizza/images/7/70/FNaF3_Steam_Greenlight_Icon.png/');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'FNAF 3')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="FNAF 4" onclick="location.href='projects/FNAF4.html'" style="background-image: url('https://static.wikia.nocookie.net/fivenightsatfreddys/images/6/6c/Fnaf_4_desktop_icon.jpg/');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'FNAF 4')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="2048" onclick="location.href='projects/2048.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/2048/icon.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, '2048')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Paper.IO 2" onclick="location.href='projects/PIO2.html'" style="background-image: url('https://play.cluster.ws/icons/paperio.webp');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Paper.IO 2')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Bitlife" onclick="location.href='projects/BL.html'" style="background-image: url('https://play.cluster.ws/icons/bitlife.webp');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Bitlife')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Crossy Road" onclick="location.href='projects/CR.html'" style="background-image: url('https://play.cluster.ws/icons/crossyroad.webp');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Crossy Road')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Subway Surfers" onclick="location.href='projects/SS.html'" style="background-image: url('https://e.snmc.io/lk/lv/x/bb7812e01a96321231f2c33973b99489/5282921');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Subway Surfers')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Friday Night Funkin" onclick="location.href='projects/FNF.html'" style="background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6a69df4f-ca4d-43ec-a2ed-c60b63611e35/dhay1qn-22941ad2-d89d-4f19-af2a-7ccacadd1953.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzZhNjlkZjRmLWNhNGQtNDNlYy1hMmVkLWM2MGI2MzYxMWUzNVwvZGhheTFxbi0yMjk0MWFkMi1kODlkLTRmMTktYWYyYS03Y2NhY2FkZDE5NTMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0._d96MWQC74bZ4il-zAdQ4azWjOBDUoAWLjpVEZLV3sk');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Friday Night Funkin')"></i>
+        </div>
+         <div class="grid-item" data-tooltip="Bob The Robber 2" onclick="location.href='projects/BTR2.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy_xtRQckjtIJkcIKIegrgpbWGzDEPC_rERQ&s');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Bob The Robber 2')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Deepest Sword" onclick="location.href='projects/DS.html'" style="background-image: url('https://play-lh.googleusercontent.com/DxwfTOibQNJDU_DgeF89qaW6Hbax6j1Qqy8NmxmbJF0tHHpX3zOHPBRga7OCl8Uz850');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Deepest Sword')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Drift Boss" onclick="location.href='projects/DB.html'" style="background-image: url('https://m.media-amazon.com/images/I/71Rvyj1gI1L.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Drift Boss')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Infinte Craft" onclick="location.href='projects/IC.html'" style="background-image: url('https://images.immediate.co.uk/production/volatile/sites/3/2024/03/Infinite-Craft-Whole-List-21882d0.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Infinte Craft')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="The Binding Of Issac" onclick="location.href='projects/TBOI.html'" style="background-image: url('https://static.wikia.nocookie.net/character-stats-and-profiles/images/6/6e/Issa.png/');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'The Binding Of Issac')"></i>
+        </div>
+         <div class="grid-item" data-tooltip="Granny" onclick="location.href='projects/GR.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3CsW42ycrC_3Wsbyx_W6PeC2L7yL-ih3U6Iyw-j89TyQg1nI:https://play-lh.googleusercontent.com/yT_LBq_tyKeIDohKDsqN_Qt18jGIPUYIxY2C-1-E2YA9Qd60uZW08pua17qBmIiDPA&s');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Granny')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Fruit Ninja" onclick="location.href='projects/FN.html'" style="background-image: url('https://loser.co.is.goated.df.cissp.or.id/semag/fruitninja/FruitNinjaTeaser.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Fruit Ninja')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Gameboy Advanced Emulator" onclick="location.href='projects/GBA.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Nintendo-Game-Boy-Advance-Purple-FL.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Gameboy Advanced Emulator')"></i>
+        </div>
+         <div class="grid-item" data-tooltip="Yohoho.io" onclick="location.href='projects/YH.html'" style="background-image: url('https://img02.symbaloo.com/TKhg62XFE5bNO3g03Y2IWQfbBYE=/0x0:162x162/fit-in/162x162/filters:no_upscale()/smarkImages%2Fv1%2F72%2F8d%2F9420fd806867cb950c474427c77ee85397e668423d8ac254d2fa4d0e7b40.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Yohoho.io')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Slow Roads" onclick="location.href='projects/SR.html'" style="background-image: url('https://rocketgames.imgix.net/uploads/games/slow-roads-io/slow-roads-io.adda0e.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Slow Roads')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Time Shooter 2" onclick="location.href='projects/TS2.html'" style="background-image: url('https://rocketgames.imgix.net/uploads/games/time-shooter-2/time-shooter-2.9d7d6d.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Time Shooter 2')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Flappy Bird" onclick="location.href='projects/FBR.html'" style="background-image: url('https://techcrunch.com/wp-content/uploads/2014/02/flappy.gif');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Flappy Bird')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Chess" onclick="location.href='projects/CH.html'" style="background-image: url('https://images.chesscomfiles.com/uploads/v1/article/15164.75b875dd.668x375o.8429b40c2838@2x.jpeg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Chess')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Draw Climber" onclick="location.href='projects/DC.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-lCTq42razgj7UWsk9VYUxq0-LfeTDPD2q1p_7DJxGjumAvNA:https://play-lh.googleusercontent.com/70T7qV9LvT2RyB7WtE2Z88I6oZfS6Gq9Wd6mTUbFweoLUHkEjduBsc2rprDuxfa7lw&s');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Draw Climber')"></i>
+        </div>
+         <div class="grid-item" data-tooltip="Plants VS Zombies" onclick="location.href='projects/PVZ.html'" style="background-image: url('https://m.media-amazon.com/images/I/61Aethog1iL.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Plants VS Zombies')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Block Blast" onclick="location.href='projects/BLA.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_5UJQ3yDmaVq5OifhMTYKMX3e1fwj_7fql0-oz1EhkLsdi54:https://www.lancerspiritonline.com/wp-content/uploads/2024/12/bloc-blast.png&s');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Block Blast')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Sandtrix" onclick="location.href='projects/ST.html'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCEkKmeS5pCmiCAwHlZ4Rc2nsLmGc4POV7BuCQ0HVViw4j4B9A:https://play-lh.googleusercontent.com/MGKHztYIuX4xlFlP54oWKZ1usjg9pxH6XV_0VUabcPjeVs6XIzosB14ueK9mCeae-6Q&s');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Sandtrix')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Rocket League" onclick="location.href='projects/RL.html'" style="background-image: url('https://imageio.forbes.com/specials-images/imageserve/6526949d330336c4676e8fdd/rocket/960x0.jpg');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Rocket League')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Monkey Mart" onclick="location.href='projects/MM.html'" style="background-image: url('https://play-lh.googleusercontent.com/rWReIdyvDaYJPeOxn7hbC0b-96ixGpQKM_EndiQa3SUME8TtI_rNUcI4qsw5teK9mqk');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Monkey Mart')"></i>
+        </div>
+        <div class="grid-item" data-tooltip="Pac-Man" onclick="location.href='projects/PM.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Original_PacMan.svg/220px-Original_PacMan.svg.png');">
+            <i class="fa-regular fa-star star" onclick="toggleFavorite(event, this, 'Pac-Man')"></i>
+        </div>
+        <!-- Add more grid items as needed -->
+    </div>
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const gridItems = document.querySelectorAll('.grid-item');
+        const pageStar = document.getElementById('page-star');
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+        let showingAll = true; // Flag to track if showing all games or just favorites
 
-      searchBar.addEventListener('input', function() {
-        const searchTerm = searchBar.value.toLowerCase();
-        let foundMatch = false; // Flag to check if any game matches the search
+        // Function to toggle favorite status
+        function toggleFavorite(event, element, gameName) {
+            event.stopPropagation(); // Prevent grid-item onclick from firing
 
-        gridItems.forEach(item => {
-          const tooltip = item.getAttribute('data-tooltip').toLowerCase();
-          if (tooltip.includes(searchTerm)) {
-            item.classList.remove('hide');
-            foundMatch = true; // Set flag to true if a match is found
-          } else {
-            item.classList.add('hide');
-          }
+            if (favorites[gameName]) {
+                delete favorites[gameName]; // Remove from favorites
+                element.classList.remove('active');
+                element.classList.remove('fa-solid');
+                element.classList.add('fa-regular');
+
+            } else {
+                favorites[gameName] = true; // Add to favorites
+                element.classList.add('active');
+                element.classList.add('fa-solid');
+                element.classList.remove('fa-regular');
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            if (!showingAll) {
+                filterFavorites(); // Re-apply filter if only showing favorites
+            }
+        }
+
+        // Function to toggle display of favorites
+        function toggleFavorites() {
+            showingAll = !showingAll;
+            if (showingAll) {
+                pageStar.classList.remove('active');
+                pageStar.classList.remove('fa-solid');
+                pageStar.classList.add('fa-regular');
+                gridItems.forEach(item => item.classList.remove('hide')); // Show all games
+            } else {
+                pageStar.classList.add('active');
+                 pageStar.classList.add('fa-solid');
+                pageStar.classList.remove('fa-regular');
+                filterFavorites(); // Show only favorites
+            }
+        }
+
+        // Function to filter and display only favorite games
+        function filterFavorites() {
+            gridItems.forEach(item => {
+                const gameName = item.getAttribute('data-tooltip');
+                if (favorites[gameName]) {
+                    item.classList.remove('hide'); // Show favorite games
+                } else {
+                    item.classList.add('hide'); // Hide non-favorite games
+                }
+            });
+        }
+
+        // Initial setup: Highlight already favorited games on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            gridItems.forEach(item => {
+                const gameName = item.getAttribute('data-tooltip');
+                const star = item.querySelector('.star');
+                if (favorites[gameName]) {
+                    star.classList.add('active');
+                    star.classList.add('fa-solid');
+                    star.classList.remove('fa-regular');
+                }
+            });
         });
 
-        // If no match is found, you might want to handle it (e.g., display a message)
-        if (!foundMatch && searchTerm !== '') {
-          // Optional: Display a message indicating no games were found
-          console.log("No games found matching your search.");
-        }
-      });
-  </script>
+        searchBar.addEventListener('input', function () {
+            const searchTerm = searchBar.value.toLowerCase();
+            let foundMatch = false;
 
+            gridItems.forEach(item => {
+                const tooltip = item.getAttribute('data-tooltip').toLowerCase();
+                if (tooltip.includes(searchTerm)) {
+                    item.classList.remove('hide');
+                    foundMatch = true;
+                } else {
+                    item.classList.add('hide');
+                }
+
+                if (!showingAll && !favorites[item.getAttribute('data-tooltip')]) {
+                    item.classList.add('hide'); // Keep non-favorites hidden when filtering
+                }
+            });
+
+            if (!foundMatch && searchTerm !== '') {
+                console.log("No games found matching your search.");
+            }
+        });
+    </script>
 </body>
 </html>
