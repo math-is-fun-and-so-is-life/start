@@ -17,6 +17,7 @@
             align-items: center;
             background-color: black;
             color: white;
+            position: relative; /* Ensure body is positioned for absolute child */
         }
 
         .header {
@@ -26,7 +27,6 @@
             margin-top: 20px;
             text-align: center;
             font-family: 'Nosifer', cursive;
-            position: relative; /* Add this */
         }
 
         /* Star Styles */
@@ -37,6 +37,7 @@
             font-size: 30px;
             color: white;
             cursor: pointer;
+            z-index: 1000; /* Ensure it's on top of everything */
         }
 
         #page-star.active {
@@ -121,9 +122,9 @@
     </style>
 </head>
 <body>
+    <i class="fa-regular fa-star" id="page-star" onclick="toggleFavorites()"></i> <!-- Moved outside header -->
     <div class="header">
         Base Games
-        <i class="fa-regular fa-star" id="page-star" onclick="toggleFavorites()"></i>
     </div>
     <input type="text" id="search-bar" placeholder="Search for a game...">
     <div class="divider"></div>
