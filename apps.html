@@ -28,7 +28,7 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            z-index: 2;
+            z-index: 2; /* Boxes are in front of the rocket */
         }
         .box {
             position: relative;
@@ -58,7 +58,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            z-index: 1;
+            z-index: 1; /* Rocket stays behind the squares */
             font-size: 2rem;
         }
         .trail {
@@ -68,6 +68,7 @@
             background-color: orange;
             border-radius: 50%;
             animation: fade 2s forwards;
+            z-index: 1; /* Trail also stays behind the squares */
         }
         @keyframes fade {
             to {
@@ -108,31 +109,15 @@
 
     <script>
         const rocket = document.querySelector('.rocket');
-        const boxes = document.querySelectorAll('.box');
         let x = 0, y = 0;
         let dx = 3, dy = 3;
 
         function moveRocket() {
-            const rocketRect = rocket.getBoundingClientRect();
+            const rect = rocket.getBoundingClientRect();
 
-            // Check for collisions with the window edges
-            if (x + rocketRect.width > window.innerWidth || x < 0) dx *= -1;
-            if (y + rocketRect.height > window.innerHeight || y < 0) dy *= -1;
-
-            // Check for collisions with boxes
-            boxes.forEach(box => {
-                const boxRect = box.getBoundingClientRect();
-                if (
-                    rocketRect.right + dx > boxRect.left &&
-                    rocketRect.left + dx < boxRect.right &&
-                    rocketRect.bottom + dy > boxRect.top &&
-                    rocketRect.top + dy < boxRect.bottom
-                ) {
-                    // Reverse direction to avoid collision
-                    dx *= -1;
-                    dy *= -1;
-                }
-            });
+            // Check for window boundaries
+            if (x + rect.width > window.innerWidth || x < 0) dx *= -1;
+            if (y + rect.height > window.innerHeight || y < 0) dy *= -1;
 
             // Update rocket position
             x += dx;
@@ -141,7 +126,7 @@
             rocket.style.left = x + 'px';
             rocket.style.top = y + 'px';
 
-            createTrail(x + rocketRect.width / 2, y + rocketRect.height / 2);
+            createTrail(x + rect.width / 2, y + rect.height / 2);
         }
 
         function createTrail(x, y) {
