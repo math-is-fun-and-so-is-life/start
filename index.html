@@ -30,46 +30,46 @@
 
     /* Popup styles */
     #popup-box {
-      display: none; /* Hidden by default */
-      position: fixed; /* Centered on screen */
+      display: none;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #2a2a2a; /* Dark background */
-      border-radius: 10px; /* Rounded corners */
-      padding: 20px; /* Padding inside the box */
-      z-index: 1000; /* Ensure it's on top of other elements */
-      color: white; /* Text color */
-      text-align: center; /* Center text */
-      box-shadow: 0 0 20px rgba(255,0,0,0.5); /* Shadow effect */
-      width: 300px; /* Width of the popup box */
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1000;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,0,0,0.5);
+      width: 300px;
     }
 
     #code-input {
-      width: calc(100% - 20px); /* Full width minus padding */
-      padding: 10px; /* Padding for input field */
-      margin-top: 10px; /* Margin above input field */
-      background-color: #1a1a1a; /* Dark background for input */
-      border: none; /* No border */
-      color: white; /* Text color for input */
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #1a1a1a;
+      border: none;
+      color: white;
     }
 
     #submit-code {
-      margin-top: 10px; /* Margin above button */
-      padding: 10px 20px; /* Padding for button */
-      background-color: #ff0000; /* Red background for button */
-      color: white; /* Text color for button */
-      border: none; /* No border for button */
-      cursor: pointer; /* Pointer cursor on hover */
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
 
     #submit-code:hover {
-      background-color: #cc0000; /* Darker red on hover */
+      background-color: #cc0000;
     }
 
     #duck-gif {
-      display: none; /* Hidden by default */
-      max-width: 100%; /* Responsive GIF size */
+      display: none;
+      max-width: 100%;
     }
 
     @keyframes gradientAnimation {
@@ -82,25 +82,23 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px; /* Space between title and buttons */
+        margin-top: 20px;
     }
 
     .button-container button {
         background-color: #808080;
         border-radius: 50%; 
-        border:none;
-        color:white;
-        width :60px;
-        height :60px;
-        margin :0 10px;
-        cursor:pointer;
-        transition :background-color .3s ease-in-out;
-
+        border: none;
+        color: white;
+        width: 60px;
+        height: 60px;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: background-color .3s ease-in-out;
     }
     
     .button-container button:hover {
-        background-color:#a0a0a0;
-
+        background-color: #a0a0a0;
     }
     
 </style>
@@ -132,10 +130,18 @@ const duckGif = document.getElementById('duck-gif');
 
 document.addEventListener('keydown', function(e) {
    typedCode += e.key.toLowerCase();
+   console.log(typedCode); // Debug: log what's being typed
    if (typedCode.endsWith('codes4sale')) {
        popupBox.style.display = 'block';
-       typedCode = ''; // Reset typed code after showing popup
+       typedCode = '';
    }
+});
+
+// Reset typedCode after 2 seconds of inactivity
+let resetTimer;
+document.addEventListener('keydown', function() {
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => typedCode = '', 2000);
 });
 
 submitCode.addEventListener('click', handleCodeSubmit);
@@ -147,35 +153,32 @@ function handleCodeSubmit() {
    const code = codeInput.value.trim();
    codeInput.value = '';
 
-   switch(code) {
-       case 'Selenite':
+   switch(code.toLowerCase()) { // Make code checking case-insensitive
+       case 'selenite':
            alert("What's that? Never heard of them!!!");
            break;
-       case 'Duck':
+       case 'duck':
            alert("duck");
            duckGif.style.display = 'block';
            setTimeout(() => duckGif.style.display = 'none', 3000);
            break;
-       case 'Dead By Daylight':
+       case 'dead by daylight':
            alert("THAT'S THE CREATORS FAVORITE GAME!!!");
            break;
-       case 'Nicholas Connor Blackledge':
+       case 'nicholas connor blackledge':
            alert("Ahem... what the f*ck?");
            break;
-       case 'Kaylee':
+       case 'kaylee':
            alert("SHUT UP ABOUT HER, SHES TAKEN!!!");
            break;
-       case 'Ducks Pond':
+       case 'ducks pond':
            alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until February 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
            break;
-       case 'Escape Room':
+       case 'escape room':
            alert("Escape room? Hah! Let's see if you can actually beat one! change the '/home' in the link to '/escape' to play!");
            break;
        default:
            alert("Nope, but there are a lot! Find Them!");
-   }
-}
-
    }
 }
 
@@ -194,7 +197,7 @@ document.getElementById('classicsButton').addEventListener('click', function() {
    location.href = 'classics.html';
 });
 document.getElementById('moviesButton').addEventListener('click', function() {
-   location.href = 'flims.html'; // Correct spelling as specified
+   location.href = 'flims.html';
 });
 document.getElementById('masksButton').addEventListener('click', function() {
    location.href = 'apps.html';
