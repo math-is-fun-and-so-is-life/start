@@ -18,44 +18,6 @@
       background-size: 200% 200%;
       animation: gradientAnimation 10s ease infinite;
       overflow: hidden;
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-    }
-
-    .loading-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #3f3132;
-      opacity: 1;
-      transition: opacity 2s ease-in-out;
-    }
-
-    .loading-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-    }
-
-    .loading-content h1 {
-      color: white;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .loading-content img {
-      max-width: 100%;
-      max-height: 50%;
-      object-fit: contain;
-      animation: loadingAnimation 2s ease-in-out infinite;
     }
 
     .creepy-title {
@@ -64,231 +26,173 @@
       color: #ff0000;
       font-size: 3rem;
       margin-bottom: 1rem;
-      opacity: 0;
-      transition: opacity 2s ease-in-out, color 1s ease;
-      cursor: pointer;
     }
 
-    .creepy-title:hover {
-      color: yellow;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-    }
-
-    .button-container button {
-      background-color: #808080;
-      border: none;
-      color: white;
-      width: 60px;
-      height: 60px;
-      padding: 0;
-      text-align: center;
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      margin: 0 10px;
-      cursor: pointer;
-      border-radius: 50%;
-      transition: background-color 0.3s;
-      position: relative;
-    }
-
-    .button-container button:hover {
-      background-color: #a0a0a0;
-    }
-
-    .button-container button::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: black;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .button-container button:hover::after {
-      opacity: 1;
-    }
-
-    /* POPUP STYLES */
+    /* Popup styles */
     #popup-box {
-      display: none;
-      position: fixed;
+      display: none; /* Hidden by default */
+      position: fixed; /* Centered on screen */
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #2a2a2a;
-      border: 2px solid #ff0000;
-      border-radius: 10px;
-      padding: 20px;
-      z-index: 1000;
-      color: white;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,0,0,0.5);
-      width: 300px;
+      background-color: #2a2a2a; /* Dark background */
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px; /* Padding inside the box */
+      z-index: 1000; /* Ensure it's on top of other elements */
+      color: white; /* Text color */
+      text-align: center; /* Center text */
+      box-shadow: 0 0 20px rgba(255,0,0,0.5); /* Shadow effect */
+      width: 300px; /* Width of the popup box */
     }
 
     #code-input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      background: #1a1a1a;
-      border: 1px solid #ff0000;
-      color: white;
+      width: calc(100% - 20px); /* Full width minus padding */
+      padding: 10px; /* Padding for input field */
+      margin-top: 10px; /* Margin above input field */
+      background-color: #1a1a1a; /* Dark background for input */
+      border: none; /* No border */
+      color: white; /* Text color for input */
     }
 
     #submit-code {
-      background: #ff0000;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background 0.3s;
+      margin-top: 10px; /* Margin above button */
+      padding: 10px 20px; /* Padding for button */
+      background-color: #ff0000; /* Red background for button */
+      color: white; /* Text color for button */
+      border: none; /* No border for button */
+      cursor: pointer; /* Pointer cursor on hover */
     }
 
     #submit-code:hover {
-      background: #cc0000;
+      background-color: #cc0000; /* Darker red on hover */
     }
 
     #duck-gif {
-      display: none;
-      margin-top: 10px;
-      max-width: 100%;
-    }
-
-    @keyframes loadingAnimation {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+      display: none; /* Hidden by default */
+      max-width: 100%; /* Responsive GIF size */
     }
 
     @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
-  </style>
+    
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; /* Space between title and buttons */
+    }
+
+    .button-container button {
+        background-color: #808080;
+        border-radius: 50%; 
+        border:none;
+        color:white;
+        width :60px;
+        height :60px;
+        margin :0 10px;
+        cursor:pointer;
+        transition :background-color .3s ease-in-out;
+
+    }
+    
+    .button-container button:hover {
+        background-color:#a0a0a0;
+
+    }
+    
+</style>
 </head>
 <body>
-  <div class="loading-container">
-    <div class="loading-content">
-      <h1>Loading...</h1>
-      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJtdTI0azhuM3ppZ2dyaGZ2cWNhN3F1eDlrdmlmNnA3NTAzZnFtZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dBO6lIfHnc7vVpAO4X/giphy.webp" alt="Loading...">
-    </div>
-  </div>
+  
+<div class="creepy-title">Rubellite</div>
 
-  <div class="creepy-title">Rubellite</div>
-
-  <div class="button-container">
-    <button id="gamesButton" data-tooltip="Games">🎮</button>
-    <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
-    <button id="moviesButton" data-tooltip="Movies">📹</button>
-    <button id="masksButton" data-tooltip="Apps">🚀</button>
-  </div>
-
-  <!-- Code Popup Box -->
-  <div id="popup-box">
+<div id="popup-box">
     <p>What's The Code?</p>
     <input type="text" id="code-input" placeholder="Enter code">
     <button id="submit-code">Submit</button>
     <img id="duck-gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG15eXJoMG0ydHFwNTA5MzRsbDhxaWtmNWdsZDlzOGczN3A1bnAwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PQHZH0iHMCmrNhRcE9/giphy.gif" alt="Duck GIF">
-  </div>
+</div>
 
-  <script>
-    window.addEventListener('load', function() {
-      const loadingContainer = document.querySelector('.loading-container');
-      const creepyTitle = document.querySelector('.creepy-title');
-      const buttonContainer = document.querySelector('.button-container');
+<div class="button-container">
+   <button id="gamesButton" data-tooltip="Games">🎮</button>
+   <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
+   <button id="moviesButton" data-tooltip="Movies">📹</button>
+   <button id="masksButton" data-tooltip="Apps">🚀</button>
+</div>
 
-      setTimeout(function() {
-        loadingContainer.style.opacity = 0;
-        setTimeout(function() {
-          loadingContainer.style.display = 'none';
-          document.body.style.opacity = 1;
-          creepyTitle.style.opacity = 1;
-          buttonContainer.style.opacity = 1;
-        }, 2000);
-      }, 2000);
+<script>
+let typedCode = '';
+const popupBox = document.getElementById('popup-box');
+const codeInput = document.getElementById('code-input');
+const submitCode = document.getElementById('submit-code');
+const duckGif = document.getElementById('duck-gif');
 
-      // Add code popup functionality
-      const popupBox = document.getElementById('popup-box');
-      const codeInput = document.getElementById('code-input');
-      const submitCode = document.getElementById('submit-code');
-      const duckGif = document.getElementById('duck-gif');
+document.addEventListener('keydown', function(e) {
+   typedCode += e.key.toLowerCase();
+   if (typedCode.endsWith('codes4sale')) {
+       popupBox.style.display = 'block';
+       typedCode = ''; // Reset typed code after showing popup
+   }
+});
 
-      creepyTitle.addEventListener('click', function() {
-        popupBox.style.display = 'block';
-      });
+submitCode.addEventListener('click', handleCodeSubmit);
+codeInput.addEventListener('keypress', function(e) {
+   if (e.key === 'Enter') handleCodeSubmit();
+});
 
-      submitCode.addEventListener('click', handleCodeSubmit);
-      codeInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') handleCodeSubmit();
-      });
+function handleCodeSubmit() {
+   const code = codeInput.value.trim();
+   codeInput.value = '';
 
-      function handleCodeSubmit() {
-        const code = codeInput.value.trim();
-        codeInput.value = '';
-        
-        switch(code) {
-          case 'Selenite':
-            alert("What's that? Never heard of them!!!");
-            break;
-          case 'Duck':
-            alert("duck");
-            duckGif.style.display = 'block';
-            setTimeout(() => duckGif.style.display = 'none', 3000);
-            break;
-          case 'Dead By Daylight':
-            alert("THAT'S THE CREATORS FAVORITE GAME!!!");
-            break;
-          case 'Nicholas Connor Blackledge':
-            alert("Ahem... what the f*ck?");
-            break;
-          case 'Kaylee':
-            alert("SHUT UP ABOUT HER, SHES TAKEN!!!");
-            break;
-          case 'Ducks Pond':
-            alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until Febuary 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
-            break;
-          default:
-            alert("Nope, but there are a lot! Find Them!");
-        }
-      }
+   switch(code) {
+       case 'Selenite':
+           alert("What's that? Never heard of them!!!");
+           break;
+       case 'Duck':
+           alert("duck");
+           duckGif.style.display = 'block';
+           setTimeout(() => duckGif.style.display = 'none', 3000);
+           break;
+       case 'Dead By Daylight':
+           alert("THAT'S THE CREATORS FAVORITE GAME!!!");
+           break;
+       case 'Nicholas Connor Blackledge':
+           alert("Ahem... what the f*ck?");
+           break;
+       case 'Kaylee':
+           alert("SHUT UP ABOUT HER, SHES TAKEN!!!");
+           break;
+       case 'Ducks Pond':
+           alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until February 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
+           break;
+       default:
+           alert("Nope, but there are a lot! Find Them!");
+   }
+}
 
-      window.addEventListener('click', function(e) {
-        if (e.target === popupBox || e.target.closest('#popup-box')) return;
-        popupBox.style.display = 'none';
-        duckGif.style.display = 'none';
-      });
+// Close popup when clicking outside
+window.addEventListener('click', function(e) {
+   if (e.target === popupBox || popupBox.contains(e.target)) return;
+   popupBox.style.display = 'none';
+   duckGif.style.display = 'none';
+});
 
-      // Original button functionality
-      document.getElementById('gamesButton').addEventListener('click', function() {
-        location.href = 'all.html';
-      });
-      document.getElementById('classicsButton').addEventListener('click', function() {
-        location.href = 'classics.html';
-      });
-      document.getElementById('moviesButton').addEventListener('click', function() {
-        location.href = 'flims.html';
-      });
-      document.getElementById('masksButton').addEventListener('click', function() {
-        location.href = 'apps.html';
-      });
-    });
-  </script>
+// Original button functionality
+document.getElementById('gamesButton').addEventListener('click', function() {
+   location.href = 'all.html';
+});
+document.getElementById('classicsButton').addEventListener('click', function() {
+   location.href = 'classics.html';
+});
+document.getElementById('moviesButton').addEventListener('click', function() {
+   location.href = 'flims.html'; // Correct spelling as specified
+});
+document.getElementById('masksButton').addEventListener('click', function() {
+   location.href = 'apps.html';
+});
+</script>
 </body>
 </html>
