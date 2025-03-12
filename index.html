@@ -18,8 +18,8 @@
       background-size: 200% 200%;
       animation: gradientAnimation 10s ease infinite;
       overflow: hidden;
-      opacity: 0; /* Start as invisible */
-      transition: opacity 2s ease-in-out; /* Transition for fade-in */
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
     }
 
     .loading-container {
@@ -33,8 +33,8 @@
       justify-content: center;
       align-items: center;
       background-color: #3f3132;
-      opacity: 1; /* Fully visible */
-      transition: opacity 2s ease-in-out; /* Transition for fade-out */
+      opacity: 1;
+      transition: opacity 2s ease-in-out;
     }
 
     .loading-content {
@@ -55,7 +55,7 @@
       max-width: 100%;
       max-height: 50%;
       object-fit: contain;
-      animation: loadingAnimation 2s ease-in-out infinite; /* Adjusted for visibility */
+      animation: loadingAnimation 2s ease-in-out infinite;
     }
 
     .creepy-title {
@@ -63,29 +63,30 @@
       font-weight: bold;
       color: #ff0000;
       font-size: 3rem;
-      margin-bottom: 1rem; /* Adjusted margin */
-      opacity: 0; /* Start as invisible */
-      transition: opacity 2s ease-in-out, color 1s ease; /* Transitions for fade-in and color change */
+      margin-bottom: 1rem;
+      opacity: 0;
+      transition: opacity 2s ease-in-out, color 1s ease;
+      cursor: pointer;
     }
 
     .creepy-title:hover {
-      color: yellow; /* Change to yellow on hover */
+      color: yellow;
     }
 
     .button-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0; /* Start as invisible */
-      transition: opacity 2s ease-in-out; /* Transition for fade-in */
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
     }
 
     .button-container button {
       background-color: #808080;
       border: none;
       color: white;
-      width: 60px; /* Fixed width for circular shape */
-      height: 60px; /* Fixed height for circular shape */
+      width: 60px;
+      height: 60px;
       padding: 0;
       text-align: center;
       text-decoration: none;
@@ -95,13 +96,13 @@
       font-size: 24px;
       margin: 0 10px;
       cursor: pointer;
-      border-radius: 50%; /* Make buttons circular */
-      transition: background-color 0.3s; /* Transition for hover effect */
+      border-radius: 50%;
+      transition: background-color 0.3s;
       position: relative;
     }
 
     .button-container button:hover {
-      background-color: #a0a0a0; /* Change color on hover */
+      background-color: #a0a0a0;
     }
 
     .button-container button::after {
@@ -123,28 +124,62 @@
       opacity: 1;
     }
 
+    /* POPUP STYLES */
+    #popup-box {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2a2a2a;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1000;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,0,0,0.5);
+      width: 300px;
+    }
+
+    #code-input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background: #1a1a1a;
+      border: 1px solid #ff0000;
+      color: white;
+    }
+
+    #submit-code {
+      background: #ff0000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #submit-code:hover {
+      background: #cc0000;
+    }
+
+    #duck-gif {
+      display: none;
+      margin-top: 10px;
+      max-width: 100%;
+    }
+
     @keyframes loadingAnimation {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
@@ -165,24 +200,82 @@
     <button id="masksButton" data-tooltip="Apps">🚀</button>
   </div>
 
+  <!-- Code Popup Box -->
+  <div id="popup-box">
+    <p>What's The Code?</p>
+    <input type="text" id="code-input" placeholder="Enter code">
+    <button id="submit-code">Submit</button>
+    <img id="duck-gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG15eXJoMG0ydHFwNTA5MzRsbDhxaWtmNWdsZDlzOGczN3A1bnAwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PQHZH0iHMCmrNhRcE9/giphy.gif" alt="Duck GIF">
+  </div>
+
   <script>
     window.addEventListener('load', function() {
       const loadingContainer = document.querySelector('.loading-container');
       const creepyTitle = document.querySelector('.creepy-title');
       const buttonContainer = document.querySelector('.button-container');
 
-      // Keep loading animation visible for 2 seconds
       setTimeout(function() {
-        loadingContainer.style.opacity = 0; // Fade out loading container
+        loadingContainer.style.opacity = 0;
         setTimeout(function() {
-          loadingContainer.style.display = 'none'; // Hide loading container
-          document.body.style.opacity = 1; // Fade in body
-          creepyTitle.style.opacity = 1; // Fade in title
-          buttonContainer.style.opacity = 1; // Fade in buttons
-        }, 2000); // Wait for fade-out to complete
-      }, 2000); // Keep loading animation visible for 2 seconds
+          loadingContainer.style.display = 'none';
+          document.body.style.opacity = 1;
+          creepyTitle.style.opacity = 1;
+          buttonContainer.style.opacity = 1;
+        }, 2000);
+      }, 2000);
 
-      // Add event listeners to buttons for navigation
+      // Add code popup functionality
+      const popupBox = document.getElementById('popup-box');
+      const codeInput = document.getElementById('code-input');
+      const submitCode = document.getElementById('submit-code');
+      const duckGif = document.getElementById('duck-gif');
+
+      creepyTitle.addEventListener('click', function() {
+        popupBox.style.display = 'block';
+      });
+
+      submitCode.addEventListener('click', handleCodeSubmit);
+      codeInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleCodeSubmit();
+      });
+
+      function handleCodeSubmit() {
+        const code = codeInput.value.trim();
+        codeInput.value = '';
+        
+        switch(code) {
+          case 'Selenite':
+            alert("What's that? Never heard of them!!!");
+            break;
+          case 'Duck':
+            alert("duck");
+            duckGif.style.display = 'block';
+            setTimeout(() => duckGif.style.display = 'none', 3000);
+            break;
+          case 'Dead By Daylight':
+            alert("THAT'S THE CREATORS FAVORITE GAME!!!");
+            break;
+          case 'Nicholas Connor Blackledge':
+            alert("Ahem... what the f*ck?");
+            break;
+          case 'Kaylee':
+            alert("SHUT UP ABOUT HER, SHES TAKEN!!!");
+            break;
+          case 'Ducks Pond':
+            alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until Febuary 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
+            break;
+          default:
+            alert("Nope, but there are a lot! Find Them!");
+        }
+      }
+
+      window.addEventListener('click', function(e) {
+        if (e.target === popupBox || e.target.closest('#popup-box')) return;
+        popupBox.style.display = 'none';
+        duckGif.style.display = 'none';
+      });
+
+      // Original button functionality
       document.getElementById('gamesButton').addEventListener('click', function() {
         location.href = 'all.html';
       });
@@ -190,7 +283,7 @@
         location.href = 'classics.html';
       });
       document.getElementById('moviesButton').addEventListener('click', function() {
-        location.href = 'flims.html'; // 'flims' as specified
+        location.href = 'flims.html';
       });
       document.getElementById('masksButton').addEventListener('click', function() {
         location.href = 'apps.html';
