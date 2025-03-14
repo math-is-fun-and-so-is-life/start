@@ -35,12 +35,11 @@
       color: white;
       margin-bottom: 2rem;
       opacity: 0;
-      animation: fadeIn 1.5s ease-in forwards;
+      transition: opacity 1.5s ease-in;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .quote-container.visible {
+      opacity: 1;
     }
 
     #popup-box {
@@ -180,16 +179,16 @@ function handleCodeSubmit() {
            alert("THAT'S THE CREATORS FAVORITE GAME!!!");
            break;
        case 'nicholas connor blackledge':
-           alert("Ahem... what the f*ck?");
+           alert("Ahem... what the heck?");
            break;
        case 'kaylee':
-           alert("SHUT UP ABOUT HER, SHES TAKEN!!!");
+           alert("Shhhhh!!!");
            break;
        case 'ducks pond':
            alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until February 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
            break;
        case 'escape room':
-           alert("Escape room? Hah! Let's see if you can actually beat one! change the '/home' in the link to '/escape' to play!");
+           alert("Escape room? Hah! Let's see if you can actually beat one! change the '/start' in the link to '/escape' to play!");
            break;
        default:
            alert("Nope, but there are a lot! Find Them!");
@@ -223,10 +222,10 @@ const quotes = [
   "My iPad passcode is 1234567890 btw.", 
   "Why don't scientists trust atoms? Because they make up everything.", 
   "Elevating your online experience to new heights.", 
-  "#Relatable." 
-  "Water Is Wet." 
-  "Anxiety, STOP." 
-  "Type In "codes4sale" to get a surprise."
+  "#Relatable.",
+  "Water Is Wet.",
+  "Anxiety, STOP.",
+  "Type In \"codes4sale\" to get a surprise."
 ];
 
 function shuffle(array) {
@@ -237,28 +236,33 @@ function shuffle(array) {
 }
 
 function displayRandomQuote() {
-   let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
-   const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
+  let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
+  const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
 
-   if (availableQuotes.length === 0) {
-       shownQuotes = [];
-       localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
-       displayRandomQuote();
-       return; 
-   }
+  if (availableQuotes.length === 0) {
+    shownQuotes = [];
+    localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+    displayRandomQuote();
+    return; 
+  }
 
-   shuffle(availableQuotes);
-   const selectedQuote = availableQuotes[0];
-   
-   const quoteElement = document.getElementById("quote");
-   quoteElement.innerText = selectedQuote;
-   
-   quoteElement.style.animation = 'none';
-   quoteElement.offsetHeight; // Trigger reflow
-   quoteElement.style.animation = null;
+  shuffle(availableQuotes);
+  const selectedQuote = availableQuotes[0];
+  
+  const quoteElement = document.getElementById("quote");
+  quoteElement.innerText = selectedQuote;
+  
+  // Remove the visible class
+  quoteElement.classList.remove('visible');
+  
+  // Force a reflow
+  void quoteElement.offsetWidth;
+  
+  // Add the visible class back to trigger the transition
+  quoteElement.classList.add('visible');
 
-   shownQuotes.push(selectedQuote);
-   localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+  shownQuotes.push(selectedQuote);
+  localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
 }
 
 displayRandomQuote();
