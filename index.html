@@ -33,21 +33,16 @@
       font-size: 1.5rem;
       text-align: center;
       color: white;
-      margin-bottom: 2rem; /* Space between quote and buttons */
-      opacity: 0; /* Initial state for fade-in */
-      animation: fadeIn 1.5s ease-in forwards; /* Fade-in animation */
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in forwards;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0; /* Start fully transparent */
-      }
-      to {
-        opacity: 1; /* End fully visible */
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    /* Popup styles */
     #popup-box {
       display: none;
       position: fixed;
@@ -101,7 +96,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px; /* Space above buttons */
+        margin-top: 20px;
     }
 
     .button-container button {
@@ -109,10 +104,9 @@
         border-radius: 50%;
         border: none;
         color: white;
-        width: auto;
-        height: auto;
-        font-size: x-large;
-        padding: 10px;
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
         margin: 0 10px;
         cursor: pointer;
         transition: background-color .3s ease-in-out;
@@ -121,7 +115,7 @@
     .button-container button:hover {
         background-color: #a0a0a0;
     }
-</style>
+  </style>
 </head>
 <body>
   
@@ -152,14 +146,12 @@ const duckGif = document.getElementById('duck-gif');
 
 document.addEventListener('keydown', function(e) {
    typedCode += e.key.toLowerCase();
-   console.log(typedCode); // Debug: log what's being typed
    if (typedCode.endsWith('codes4sale')) {
        popupBox.style.display = 'block';
        typedCode = '';
    }
 });
 
-// Reset typedCode after 2 seconds of inactivity
 let resetTimer;
 document.addEventListener('keydown', function() {
     clearTimeout(resetTimer);
@@ -175,7 +167,7 @@ function handleCodeSubmit() {
    const code = codeInput.value.trim();
    codeInput.value = '';
 
-   switch(code.toLowerCase()) { // Make code checking case-insensitive
+   switch(code.toLowerCase()) {
        case 'selenite':
            alert("What's that? Never heard of them!!!");
            break;
@@ -204,14 +196,12 @@ function handleCodeSubmit() {
    }
 }
 
-// Close popup when clicking outside
 window.addEventListener('click', function(e) {
    if (e.target === popupBox || popupBox.contains(e.target)) return;
    popupBox.style.display = 'none';
    duckGif.style.display = 'none';
 });
 
-// Original button functionality
 document.getElementById('gamesButton').addEventListener('click', function() {
    location.href = 'all.html';
 });
@@ -225,22 +215,20 @@ document.getElementById('masksButton').addEventListener('click', function() {
    location.href = 'apps.html';
 });
 
-// Quotes Array (You can add/change quotes here)
 const quotes = [
-   "Can we normalize NOT askig for any football bros?",
-   "Ducks Pond (Rebooted) 2021-2025.",
-   "I got insperation from Selenite? Yea, i did.",
-   "Unleashing the full potential of the internet for you.",
-   "My iPad passcode is 1234567890 btw.",
-   "Why don't scientists trust atoms? Because they make up everything.",
-   "Elevating your online experience to new heights.",
-   "#Relatable."
-   "Water Is Wet."
-   "Anxiety, STOP."
-   "Type In "codes4sale" to get a surprise."
+  "Can we normalize NOT askig for any football bros?", 
+  "Ducks Pond (Rebooted) 2021-2025.", 
+  "I got insperation from Selenite? Yea, i did.", 
+  "Unleashing the full potential of the internet for you.", 
+  "My iPad passcode is 1234567890 btw.", 
+  "Why don't scientists trust atoms? Because they make up everything.", 
+  "Elevating your online experience to new heights.", 
+  "#Relatable." 
+  "Water Is Wet." 
+  "Anxiety, STOP." 
+  "Type In "codes4sale" to get a surprise."
 ];
 
-// Shuffle function
 function shuffle(array) {
    for (let i = array.length - 1; i > 0; i--) {
        const j = Math.floor(Math.random() * (i + 1));
@@ -248,12 +236,11 @@ function shuffle(array) {
    }
 }
 
-// Display Random Quote
 function displayRandomQuote() {
    let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
    const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
 
-   if (availableQuotes.length === 0) { // Reset if all quotes are shown
+   if (availableQuotes.length === 0) {
        shownQuotes = [];
        localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
        displayRandomQuote();
@@ -263,13 +250,17 @@ function displayRandomQuote() {
    shuffle(availableQuotes);
    const selectedQuote = availableQuotes[0];
    
-   document.getElementById("quote").innerText = selectedQuote;
+   const quoteElement = document.getElementById("quote");
+   quoteElement.innerText = selectedQuote;
+   
+   quoteElement.style.animation = 'none';
+   quoteElement.offsetHeight; // Trigger reflow
+   quoteElement.style.animation = null;
 
    shownQuotes.push(selectedQuote);
    localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
 }
 
-// Call the function on page load
 displayRandomQuote();
 </script>
 </body>
