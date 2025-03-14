@@ -28,6 +28,25 @@
       margin-bottom: 1rem;
     }
 
+    .quote-container {
+      font-family: Arial, sans-serif;
+      font-size: 1.5rem;
+      text-align: center;
+      color: white;
+      margin-bottom: 2rem; /* Space between quote and buttons */
+      opacity: 0; /* Initial state for fade-in */
+      animation: fadeIn 1.5s ease-in forwards; /* Fade-in animation */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0; /* Start fully transparent */
+      }
+      to {
+        opacity: 1; /* End fully visible */
+      }
+    }
+
     /* Popup styles */
     #popup-box {
       display: none;
@@ -82,16 +101,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 20px; /* Space above buttons */
     }
 
     .button-container button {
         background-color: #808080;
-        border-radius: 50%; 
+        border-radius: 50%;
         border: none;
         color: white;
-        width: 60px;
-        height: 60px;
+        width: auto;
+        height: auto;
+        font-size: x-large;
+        padding: 10px;
         margin: 0 10px;
         cursor: pointer;
         transition: background-color .3s ease-in-out;
@@ -100,12 +121,13 @@
     .button-container button:hover {
         background-color: #a0a0a0;
     }
-    
 </style>
 </head>
 <body>
   
 <div class="creepy-title">Rubellite</div>
+
+<div class="quote-container" id="quote"></div>
 
 <div id="popup-box">
     <p>What's The Code?</p>
@@ -202,6 +224,53 @@ document.getElementById('moviesButton').addEventListener('click', function() {
 document.getElementById('masksButton').addEventListener('click', function() {
    location.href = 'apps.html';
 });
+
+// Quotes Array (You can add/change quotes here)
+const quotes = [
+   "Can we normalize NOT askig for any football bros?",
+   "Ducks Pond (Rebooted) 2021-2025.",
+   "I got insperation from Selenite? Yea, i did.",
+   "Unleashing the full potential of the internet for you.",
+   "My iPad passcode is 1234567890 btw.",
+   "Why don't scientists trust atoms? Because they make up everything.",
+   "Elevating your online experience to new heights.",
+   "#Relatable."
+   "Water Is Wet."
+   "Anxiety, STOP."
+   "Type In "codes4sale" to get a surprise."
+];
+
+// Shuffle function
+function shuffle(array) {
+   for (let i = array.length - 1; i > 0; i--) {
+       const j = Math.floor(Math.random() * (i + 1));
+       [array[i], array[j]] = [array[j], array[i]];
+   }
+}
+
+// Display Random Quote
+function displayRandomQuote() {
+   let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
+   const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
+
+   if (availableQuotes.length === 0) { // Reset if all quotes are shown
+       shownQuotes = [];
+       localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+       displayRandomQuote();
+       return; 
+   }
+
+   shuffle(availableQuotes);
+   const selectedQuote = availableQuotes[0];
+   
+   document.getElementById("quote").innerText = selectedQuote;
+
+   shownQuotes.push(selectedQuote);
+   localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+}
+
+// Call the function on page load
+displayRandomQuote();
 </script>
 </body>
 </html>
