@@ -38,7 +38,7 @@
 
         socket.on('room created', (roomName) => {
             alert(`Room "${roomName}" created successfully!`);
-            window.location.href = `chat.html?room=${encodeURIComponent(roomName)}`;
+            window.location.href = `chatroom.html?room=${encodeURIComponent(roomName)}`;
         });
 
         socket.on('room exists', () => {
