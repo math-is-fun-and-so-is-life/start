@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Room - DucksChats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: yellow;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        #username-display {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        #join-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #back-button {
+            margin-top: 20px;
+            background-color: #6c757d;
+        }
+
+        #back-button:hover {
+            background-color: #5a6268;
+        }
+
+        #error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Join a Room</h1>
+    <div id="username-display"></div>
+    <div id="join-form">
+        <input type="text" id="room-code" placeholder="Enter room code">
+        <button onclick="joinRoom()">Join Room</button>
+        <div id="error-message"></div>
+    </div>
+    <button id="back-button" onclick="location.href='index.html'">Back to Home</button>
+
+    <script>
+        // Display username
+        const username = localStorage.getItem('username');
+        document.getElementById('username-display').textContent = `Welcome, ${username}!`;
+
+        function joinRoom() {
+            const roomCode = document.getElementById('room-code').value.trim();
+            const errorMessage = document.getElementById('error-message');
+
+            if (roomCode === '') {
+                errorMessage.textContent = 'Please enter a room code.';
+            } else {
+                // Here you would typically send a request to your server to validate the room code
+                // For this example, we'll just simulate a successful join
+                alert(`Joining room with code: ${roomCode}. This feature is not yet fully implemented.`);
+                // Clear any previous error messages
+                errorMessage.textContent = '';
+                // Here you would redirect to the actual chat room or implement joining logic
+            }
+        }
+    </script>
+</body>
+</html>
