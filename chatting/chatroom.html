@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room - DucksChats</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        #chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #chat-form {
+            display: flex;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        #chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="room-name"></h1>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <form id="chat-form">
+            <input id="chat-input" type="text" placeholder="Type a message..." autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const socket = io();
+        const username = localStorage.getItem('username');
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomName = urlParams.get('room');
+
+        document.getElementById('room-name').textContent = `Chat Room: ${roomName}`;
+
+        socket.emit('join room', roomName, username);
+
+        socket.on('user joined', (user) => {
+            addMessage(`${user} has joined the room.`, 'system');
+        });
+
+        socket.on('chat message', (user, message) => {
+            addMessage(`${user}: ${message}`);
+        });
+
+        document.getElementById('chat-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            if (input.value) {
+                socket.emit('chat message', roomName, username, input.value);
+                input.value = '';
+            }
+        });
+
+        function addMessage(message, type = 'user') {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.className = type === 'system' ? 'system-message' : 'user-message';
+            document.getElementById('chat-messages').appendChild(messageElement);
+            messageElement.scrollIntoView();
+        }
+    </script>
+</body>
+</html>
