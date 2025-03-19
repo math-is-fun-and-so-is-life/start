@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Room - DucksChats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: yellow;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #username-display {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        #room-list {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .room-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .room-item:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #back-button, #random-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        #random-button {
+            background-color: #28a745;
+            margin-right: 10px;
+        }
+
+        #random-button:hover {
+            background-color: #218838;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find a Room</h1>
+    <div id="username-display"></div>
+    <div id="room-list">
+        <!-- Room list will be populated here -->
+    </div>
+    <div class="button-container">
+        <button id="random-button" onclick="joinRandomRoom()">Random Room</button>
+        <button id="back-button" onclick="location.href='index.html'">Back to Home</button>
+    </div>
+
+    <script>
+        // Display username
+        const username = localStorage.getItem('username');
+        document.getElementById('username-display').textContent = `Welcome, ${username}!`;
+
+        // Mock data for available rooms
+        const rooms = [
+            { id: 1, name: "General Chat", users: 15 },
+            { id: 2, name: "Gaming", users: 8 },
+            { id: 3, name: "Music Lovers", users: 12 },
+            { id: 4, name: "Book Club", users: 5 },
+            { id: 5, name: "Random Topics", users: 20 },
+        ];
+
+        // Function to populate room list
+        function populateRoomList() {
+            const roomList = document.getElementById('room-list');
+            rooms.forEach(room => {
+                const roomItem = document.createElement('div');
+                roomItem.className = 'room-item';
+                roomItem.innerHTML = `
+                    <span>${room.name} (${room.users} users)</span>
+                    <button onclick="joinRoom(${room.id})">Join</button>
+                `;
+                roomList.appendChild(roomItem);
+            });
+        }
+
+        // Function to join a room (placeholder)
+        function joinRoom(roomId) {
+            alert(`Joining room ${roomId}. This feature is not yet implemented.`);
+            // Here you would typically redirect to a chat room page or implement room joining logic
+        }
+
+        // Function to join a random room
+        function joinRandomRoom() {
+            const randomIndex = Math.floor(Math.random() * rooms.length);
+            const randomRoom = rooms[randomIndex];
+            alert(`Joining random room: ${randomRoom.name}. This feature is not yet implemented.`);
+            // Here you would implement the logic to join the random room
+        }
+
+        // Populate room list when page loads
+        populateRoomList();
+    </script>
+</body>
+</html>
