@@ -65,15 +65,39 @@
     button:nth-child(3) {
         background-color: #ff9900; /* Orange button */
     }
+
+    /* Styling for error message */
+    #error-message {
+      color: red;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1>DucksChats</h1>
   <input type="text" id="username" placeholder="Enter your username">
+  <div id="error-message"></div>
   <div class="buttons">
-    <button onclick="location.href='find.html'">Find Room</button>
-    <button onclick="location.href='join.html'">Join Room With Code</button>
-    <button onclick="location.href='make.html'">Make A Room</button>
+    <button onclick="navigate('find.html')">Find Room</button>
+    <button onclick="navigate('join.html')">Join Room With Code</button>
+    <button onclick="navigate('make.html')">Make A Room</button>
   </div>
+
+  <script>
+    function navigate(page) {
+      const username = document.getElementById('username').value.trim();
+      const errorMessage = document.getElementById('error-message');
+      
+      if (username === '') {
+        errorMessage.textContent = 'Please enter a username before proceeding.';
+      } else {
+        // Store the username in localStorage for use in other pages
+        localStorage.setItem('username', username);
+        // Navigate to the selected page
+        window.location.href = page;
+      }
+    }
+  </script>
 </body>
 </html>
