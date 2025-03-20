@@ -1,103 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DucksChats</title>
-  <style>
-    /* Styling for the gradient background */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    /* Styling for the title */
-    h1 {
-      font-size: 3rem;
-      color: yellow;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-
-    /* Styling for the username input box */
-    input[type="text"] {
-      padding: 10px;
-      font-size: 1rem;
-      width: 300px;
-      border-radius: 5px;
-      border: none;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      margin-bottom: 20px;
-    }
-
-    /* Styling for buttons */
-    .buttons {
-      display: flex;
-      gap: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      background-color: #007BFF; /* Blue button */
-      color: white;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    button:hover {
-      background-color: #0056b3; /* Darker blue on hover */
-    }
-    
-    button:nth-child(2) {
-        background-color: #28a745; /* Green button */
-    }
-    
-    button:nth-child(3) {
-        background-color: #ff9900; /* Orange button */
-    }
-
-    /* Styling for error message */
-    #error-message {
-      color: red;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - DucksChats</title>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <style>
+        /* Your existing styles */
+    </style>
 </head>
 <body>
-  <h1>DucksChats</h1>
-  <input type="text" id="username" placeholder="Enter your username">
-  <div id="error-message"></div>
-  <div class="buttons">
-    <button onclick="navigate('find.html')">Find Room</button>
-    <button onclick="navigate('join.html')">Join Room With Code</button>
-    <button onclick="navigate('make.html')">Make A Room</button>
-  </div>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <form id="message-form">
+            <input id="message-input" type="text" placeholder="Type a message...">
+            <button type="submit">Send</button>
+        </form>
+    </div>
 
-  <script>
-    function navigate(page) {
-      const username = document.getElementById('username').value.trim();
-      const errorMessage = document.getElementById('error-message');
-      
-      if (username === '') {
-        errorMessage.textContent = 'Please enter a username before proceeding.';
-      } else {
-        // Store the username in localStorage for use in other pages
-        localStorage.setItem('username', username);
-        // Navigate to the selected page
-        window.location.href = page;
-      }
-    }
-  </script>
+    <script>
+        const username = localStorage.getItem('username');
+        
+        // Initialize Pusher
+        const pusher = new Pusher('YOUR_APP_KEY', {
+            cluster: 'YOUR_APP_CLUSTER'
+        });
+
+        const channel = pusher.subscribe('chat-channel');
+        channel.bind('new-message', function(data) {
+            addMessageToDOM(data.username, data.message);
+        });
+
+        document.getElementById('message-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value;
+            messageInput.value = '';
+
+            fetch('/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, message }),
+            });
+        });
+
+        function addMessageToDOM(username, message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${username}: ${message}`;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
 </body>
 </html>
