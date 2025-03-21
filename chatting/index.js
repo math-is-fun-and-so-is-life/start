@@ -10,4 +10,4 @@ io.on('connection', (socket) => {
   console.log('a user connected');
 });
 
-http.listen(3000, () => console.log('listening on http://localhost:3000'));
+http.listen(3000, () => console.log('listening on http://localhost:3001'));
