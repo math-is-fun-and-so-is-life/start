@@ -114,6 +114,65 @@
     .button-container button:hover {
         background-color: #a0a0a0;
     }
+
+    /* New styles for chat button and warning popup */
+    #chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #chat-warning {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1001;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,0,0,0.5);
+      width: 300px;
+    }
+
+    #chat-warning h2 {
+      color: #ff0000;
+      margin-top: 0;
+    }
+
+    #chat-warning p {
+      margin-bottom: 20px;
+    }
+
+    #chat-warning button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chat-warning-cancel {
+      background-color: #808080;
+      color: white;
+    }
+
+    #chat-warning-proceed {
+      background-color: #ff0000;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -134,6 +193,17 @@
    <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
    <button id="moviesButton" data-tooltip="Movies">📹</button>
    <button id="masksButton" data-tooltip="Apps">🚀</button>
+</div>
+
+<!-- New chat button -->
+<button id="chat-button">💬</button>
+
+<!-- New chat warning popup -->
+<div id="chat-warning">
+  <h2>WARNING</h2>
+  <p>This is a place to chat with everyone using the site. Refreshing will cause in deleting all the messages for your side. Do you wish to continue?</p>
+  <button id="chat-warning-cancel">Cancel</button>
+  <button id="chat-warning-proceed">Proceed</button>
 </div>
 
 <script>
@@ -266,6 +336,31 @@ function displayRandomQuote() {
 }
 
 displayRandomQuote();
+
+// New chat functionality
+const chatButton = document.getElementById('chat-button');
+const chatWarning = document.getElementById('chat-warning');
+const chatWarningCancel = document.getElementById('chat-warning-cancel');
+const chatWarningProceed = document.getElementById('chat-warning-proceed');
+
+chatButton.addEventListener('click', function() {
+  chatWarning.style.display = 'block';
+});
+
+chatWarningCancel.addEventListener('click', function() {
+  chatWarning.style.display = 'none';
+});
+
+chatWarningProceed.addEventListener('click', function() {
+  window.location.href = 'chat.html';
+});
+
+// Close warning if clicked outside
+window.addEventListener('click', function(e) {
+  if (e.target === chatWarning) {
+    chatWarning.style.display = 'none';
+  }
+});
 </script>
 </body>
 </html>
