@@ -1,58 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - DucksChats</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <style>
-        /* Your existing styles */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rubellite | Chat</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000; /* Optional: Background color while loading */
+    }
+
+    iframe {
+      border: none; /* Removes the border around the iframe */
+      width: 100vw; /* Full screen width */
+      height: 100vh; /* Full screen height */
+    }
+  </style>
 </head>
 <body>
-    <div id="chat-container">
-        <div id="messages"></div>
-        <form id="message-form">
-            <input id="message-input" type="text" placeholder="Type a message...">
-            <button type="submit">Send</button>
-        </form>
-    </div>
+  <!-- Full-screen iframe to embed localhost -->
+  <iframe src="http://localhost:3001"></iframe>
 
-    <script>
-        const username = localStorage.getItem('username');
-        
-        // Initialize Pusher
-        const pusher = new Pusher('YOUR_APP_KEY', {
-            cluster: 'YOUR_APP_CLUSTER'
-        });
-
-        const channel = pusher.subscribe('chat-channel');
-        channel.bind('new-message', function(data) {
-            addMessageToDOM(data.username, data.message);
-        });
-
-        document.getElementById('message-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const messageInput = document.getElementById('message-input');
-            const message = messageInput.value;
-            messageInput.value = '';
-
-            fetch('/message', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, message }),
-            });
-        });
-
-        function addMessageToDOM(username, message) {
-            const messagesDiv = document.getElementById('messages');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${username}: ${message}`;
-            messagesDiv.appendChild(messageElement);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-    </script>
+  <script>
+    // Optionally, you can add error handling if the localhost is not accessible
+    document.querySelector('iframe').addEventListener('error', function () {
+      alert('Unable to load the localhost. Please ensure your server is running.');
+    });
+  </script>
 </body>
 </html>
