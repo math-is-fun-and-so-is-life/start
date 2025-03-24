@@ -3,90 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="https://upload.wikimedia.org/wikipedia/en/9/90/The_DuckDuckGo_Duck.png">
     <title>DuckDuckGo Proxy</title>
     <style>
-        /* Reset default margins and padding */
-        * {
+        body {
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #282c34;
         }
-        
-        /* Make the page take up the full viewport */
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        /* Style the iframe to fill the entire page */
-        #proxy-frame {
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: block;
-        }
-        
-        /* Loading indicator */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f9f9f9;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        .loading.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Loading indicator -->
-    <div id="loading" class="loading">
-        <div class="spinner"></div>
-        <p>Loading DuckDuckGo Proxy...</p>
-    </div>
-    
-    <!-- Replace YOUR_USERNAME and YOUR_REPO_NAME with your actual GitHub username and repository name -->
-    <iframe 
-        id="proxy-frame" 
-        src="https://DucksPondWebsite.github.io/math-is-fun-and-so-is-life/" 
-        title="DuckDuckGo Proxy"
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-        onload="hideLoading()"
-    ></iframe>
-    
-    <script>
-        function hideLoading() {
-            document.getElementById('loading').classList.add('hidden');
-        }
-        
-        // If the iframe takes too long to load, hide the loading indicator after 10 seconds
-        setTimeout(hideLoading, 10000);
-    </script>
+    <iframe src="https://kzmqj4j56cwwatdnwkmo.lite.vusercontent.net/" title="Embedded Page"></iframe>
 </body>
 </html>
