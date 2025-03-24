@@ -21,15 +21,18 @@
             margin-bottom: 30px;
             white-space: nowrap;
             overflow: hidden;
-            border-right: .15em solid white; /* Creates the blinking caret */
-            width: 12ch; /* Adjust this value to match the length of your text */
+        }
+        h1 span {
+            display: inline-block;
+            border-right: .15em solid white;
+            padding-right: 5px;
             animation: 
-                typing 3.5s steps(12, end), /* Steps should match the number of characters in your text */
+                typing 2s steps(8, end),
                 blink-caret .75s step-end infinite;
         }
         @keyframes typing {
             from { width: 0; }
-            to { width: 12ch; } /* Match this value to the number of characters in your text */
+            to { width: 100%; }
         }
         @keyframes blink-caret {
             from, to { border-color: transparent; }
@@ -51,7 +54,7 @@
     </style>
 </head>
 <body>
-    <h1>The Test</h1>
+    <h1><span>The</span> Test</h1>
     <button onclick="location.href='SCARY.html'">Begin</button>
 </body>
 </html>
