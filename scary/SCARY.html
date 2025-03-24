@@ -160,11 +160,25 @@
         }
 
         function showBackgroundImage() {
-            document.getElementById('background-image').style.opacity = '0.5';
-            setTimeout(() => {
-                document.getElementById('background-image').style.opacity = '0';
-                nextQuestion();
-            }, 3000);
+    // Remove the "Next" button
+    document.getElementById('q4-next-button').style.display = 'none';
+    
+    // Show the background image
+    document.getElementById('background-image').style.opacity = '0.5';
+    
+    // Add "Me?" text after 2 seconds
+    setTimeout(() => {
+        document.getElementById('q4').innerHTML += '<p>Me?</p>';
+    }, 2000);
+
+    // Hide the background image and move to next question after 5 seconds
+    setTimeout(() => {
+        document.getElementById('background-image').style.opacity = '0';
+        nextQuestion();
+    }, 5000);
+}
+
+// ... (rest of the code remains the same)
         }
 
         function requestCamera() {
@@ -186,7 +200,7 @@
         function finishQuiz() {
             document.getElementById('user-info').innerHTML = `
                 Name: ${userName}<br>
-                Email: ${userDistrict}<br>
+                Location: ${userDistrict}<br>
                 IP: ${userIP}<br>
                 Location: ${userLocation}<br>
                 Webcam: ${webcamStatus}<br>
