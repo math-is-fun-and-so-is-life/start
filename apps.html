@@ -1,144 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apps</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, red, blue);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        h1 {
-            position: absolute;
-            top: 10px;
-            width: 100%;
-            text-align: center;
-            color: white;
-            font-size: 2rem;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            z-index: 2; /* Boxes are in front of the rocket */
-        }
-        .box {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            overflow: hidden;
-            text-align: center;
-        }
-        .box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .hover-text {
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            right: 0;
-            font-size: 14px;
-            color: white;
-            visibility: hidden;
-        }
-        .box:hover .hover-text {
-            visibility: visible;
-        }
-        .rocket {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            z-index: 1; /* Rocket stays behind the squares */
-            font-size: 2rem;
-        }
-        .trail {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: orange;
-            border-radius: 50%;
-            animation: fade 2s forwards;
-            z-index: 1; /* Trail also stays behind the squares */
-        }
-        @keyframes fade {
-            to {
-                opacity: 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: black; /* Pitch black background */
+      color: white;
+    }
+
+    .header {
+      font-size: 48px;
+      color: red;
+      text-shadow: 2px 2px 4px #000;
+      margin-top: 20px;
+      text-align: center;
+      font-family: 'Nosifer', cursive;
+    }
+
+    .divider {
+      width: 80%;
+      height: 2px;
+      background-color: white;
+      margin: 20px 0;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      width: 80%;
+    }
+
+    .grid-item {
+      width: 100%;
+      padding-top: 100%; /* Maintain square aspect ratio */
+      position: relative;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .grid-item::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .grid-item:hover::after {
+      opacity: 1;
+    }
+ 
+</style>
 </head>
 <body>
-    <h1>Apps</h1>
-    <div class="container">
-        <div class="box">
-            <a href="https://108.181.11.193/">
-                <img src="https://static-00.iconduck.com/assets.00/incognito-icon-512x487-o2l6p9u6.png" alt="Proxy/Incognito">
-                <div class="hover-text">Proxy/Incognito</div>
-            </a>
-        </div>
-        <div class="box">
-            <a href="YTO.html">
-                <img src="https://cdn3.iconfinder.com/data/icons/social-network-30/512/social-06-512.png" alt="Fake Youtube">
-                <div class="hover-text">Fake Youtube</div>
-            </a>
-        </div>
-        <div class="box">
-            <a href="SPO.html">
-                <img src="https://static.vecteezy.com/system/resources/previews/042/148/631/non_2x/spotify-logo-spotify-social-media-icon-free-png.png" alt="Fake Spotify">
-                <div class="hover-text">Fake Spotify</div>
-            </a>
-        </div>
-        <div class="box">
-            <a href="https://copilot.microsoft.com/">
-                <img src="https://brandlogos.net/wp-content/uploads/2023/09/microsoft_copilot-logo_brandlogos.net_zaqzr.png" alt="Copilot AI">
-                <div class="hover-text">Copilot AI</div>
-            </a>
-        </div>
-    </div>
-    <div class="rocket">🚀</div>
+  <div class="header">Apps</div>
+  <div class="divider"></div>
+  <div class="grid-container">
+    <!-- Example grid items -->
+    <div class="grid-item" data-tooltip="Incognito" onclick="location.href='PRO.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/9/90/The_DuckDuckGo_Duck.png/1200px-The_DuckDuckGo_Duck.png');"></div>
+    <div class="grid-item" data-tooltip="YouTube Copies" onclick="location.href='YTO.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/YouTube_social_white_square_%282017%29.svg/1200px-YouTube_social_white_square_%282017%29.svg.png');"></div>
+    <div class="grid-item" data-tooltip="Nonoki (Spotify)" onclick="location.href='SPO.html'" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1200px-Spotify_logo_without_text.svg.png');"></div>
+    <div class="grid-item" data-tooltip="Copilot (AI)" onclick="location.href='copilot.microsoft.com'" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu5bwQ311R_AHxpMzu_UXBJ1YPJTTRMya2fw&s');"></div>  
+    <div class="grid-item" data-tooltip="Bookmarklets" onclick="location.href='book.html'" style="background-image: url('https://shorten.rest/wp-content/uploads/2019/11/bookmark.jpg');"></div>  
+  <script>
 
-    <script>
-        const rocket = document.querySelector('.rocket');
-        let x = 0, y = 0;
-        let dx = 3, dy = 3;
-
-        function moveRocket() {
-            const rect = rocket.getBoundingClientRect();
-
-            // Check for window boundaries
-            if (x + rect.width > window.innerWidth || x < 0) dx *= -1;
-            if (y + rect.height > window.innerHeight || y < 0) dy *= -1;
-
-            // Update rocket position
-            x += dx;
-            y += dy;
-
-            rocket.style.left = x + 'px';
-            rocket.style.top = y + 'px';
-
-            createTrail(x + rect.width / 2, y + rect.height / 2);
-        }
-
-        function createTrail(x, y) {
-            const trail = document.createElement('div');
-            trail.className = 'trail';
-            trail.style.left = x + 'px';
-            trail.style.top = y + 'px';
-            document.body.appendChild(trail);
-            setTimeout(() => trail.remove(), 2000);
-        }
-
-        setInterval(moveRocket, 16);
-    </script>
 </body>
 </html>
