@@ -21,18 +21,15 @@
             margin-bottom: 30px;
             white-space: nowrap;
             overflow: hidden;
-        }
-        h1 span {
-            display: inline-block;
             border-right: .15em solid white;
-            padding-right: 5px;
+            width: 8ch; /* 8 characters in "The Test" */
             animation: 
                 typing 2s steps(8, end),
                 blink-caret .75s step-end infinite;
         }
         @keyframes typing {
             from { width: 0; }
-            to { width: 100%; }
+            to { width: 8ch; } /* 8 characters in "The Test" */
         }
         @keyframes blink-caret {
             from, to { border-color: transparent; }
@@ -54,7 +51,7 @@
     </style>
 </head>
 <body>
-    <h1><span>The</span> Test</h1>
+    <h1>The Test</h1>
     <button onclick="location.href='SCARY.html'">Begin</button>
 </body>
 </html>
