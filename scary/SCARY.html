@@ -118,8 +118,9 @@
         let userName = ''; // Stores the user's name
         let userEmotion = ''; // Stores the user's emotion
         let darkFear = ''; // Stores the user's answer about fear of the dark
-        let userEmail = '[Not available]'; // Placeholder for email (not accessible via browser)
+        let userDistrict = '[AISD]'; // Placeholder for email (not accessible via browser)
         let userIP = '126.834.33.3943.9293'; // Placeholder IP address
+        let userLocation = 'Gunn Junior High'; // Placeholder IP address
         let webcamStatus = 'Denied'; // Tracks webcam access status
 
         function showQuestion(num) {
@@ -185,8 +186,9 @@
         function finishQuiz() {
             document.getElementById('user-info').innerHTML = `
                 Name: ${userName}<br>
-                Email: ${userEmail}<br>
+                Email: ${userDistrict}<br>
                 IP: ${userIP}<br>
+                Location: ${userLocation}<br>
                 Webcam: ${webcamStatus}<br>
                 Emotion: ${userEmotion}<br>
                 Afraid of the dark: ${darkFear}
