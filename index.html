@@ -1,366 +1,1326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rubellite</title>
-  <link rel="icon" href="https://pngimg.com/uploads/letter_r/letter_r_PNG93927.png" type="image/jpeg">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(45deg, #ff0000, #000000);
-      background-size: 200% 200%;
-      animation: gradientAnimation 10s ease infinite;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Math Calculator</title>
+    <link rel="icon" href="https://pngimg.com/uploads/letter_r/letter_r_PNG93927.png" type="image/jpeg">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #fff;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 1.5s ease;
+        }
+        
+        /* Calculator Styles */
+        .calculator-page {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 1.5s ease;
+        }
+        
+        .calculator-page.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* Tooltip styles */
+        .header-title {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        
+        .header-title::after {
+            content: "Type \"Games\" for a surprise!";
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 100;
+        }
+        
+        .header-title::before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 100;
+        }
+        
+        .header-title:hover::after,
+        .header-title:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .calculator-container {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+            padding: 20px;
+        }
+        
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .mode-button {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mode-button:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .mode-button:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .mode-button.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        /* Standard Calculator Styles */
+        .standard-calculator {
+            display: none;
+        }
+        
+        .standard-calculator.active {
+            display: block;
+        }
+        
+        .calc-display {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .calc-input {
+            width: 100%;
+            font-size: 24px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        
+        .calc-history {
+            font-size: 14px;
+            color: #7f8c8d;
+            min-height: 20px;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        
+        .calc-current {
+            font-size: 32px;
+            text-align: right;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .calc-button {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calc-button:hover {
+            background-color: #bdc3c7;
+        }
+        
+        .calc-button.operator {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .calc-button.operator:hover {
+            background-color: #2980b9;
+        }
+        
+        .calc-button.equals {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .calc-button.equals:hover {
+            background-color: #219653;
+        }
+        
+        .calc-button.clear {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .calc-button.clear:hover {
+            background-color: #c0392b;
+        }
+        
+        .calc-button.function {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .calc-button.function:hover {
+            background-color: #8e44ad;
+        }
+        
+        /* Graphing Calculator Styles */
+        .graphing-calculator {
+            display: none;
+        }
+        
+        .graphing-calculator.active {
+            display: block;
+        }
+        
+        .display-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        
+        .input-area {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        #expression-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .graph-area {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #graph-canvas {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #2980b9;
+        }
+        
+        .button.clear {
+            background-color: var(--danger-color);
+        }
+        
+        .button.clear:hover {
+            background-color: #c0392b;
+        }
+        
+        .axis {
+            position: absolute;
+            background-color: #7f8c8d;
+        }
+        
+        .x-axis {
+            width: 100%;
+            height: 1px;
+            top: 50%;
+        }
+        
+        .y-axis {
+            height: 100%;
+            width: 1px;
+            left: 50%;
+        }
+        
+        .function-list {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        
+        .function-list h3 {
+            margin-top: 0;
+            color: var(--dark-color);
+        }
+        
+        .function-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        
+        .function-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .zoom-controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .zoom-button {
+            background-color: rgba(52, 73, 94, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            margin: 2px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .coordinates {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(52, 73, 94, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .calculator-container {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .graph-area {
+                height: 300px;
+            }
+            
+            .calc-button {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Rubellite Styles */
+        .rubellite-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff0000, #000000);
+            background-size: 200% 200%;
+            animation: gradientAnimation 10s ease infinite;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .rubellite-page.fade-in {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .creepy-title {
+            font-family: 'Creepy', serif;
+            font-weight: bold;
+            color: #ff0000;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
 
-    .creepy-title {
-      font-family: 'Creepy', serif;
-      font-weight: bold;
-      color: #ff0000;
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
+        .quote-container {
+            font-family: Arial, sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+        }
 
-    .quote-container {
-      font-family: Arial, sans-serif;
-      font-size: 1.5rem;
-      text-align: center;
-      color: white;
-      margin-bottom: 2rem;
-      opacity: 0;
-      transition: opacity 1.5s ease-in;
-    }
+        .quote-container.visible {
+            opacity: 1;
+        }
 
-    .quote-container.visible {
-      opacity: 1;
-    }
+        #popup-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            width: 300px;
+        }
 
-    #popup-box {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #2a2a2a;
-      border-radius: 10px;
-      padding: 20px;
-      z-index: 1000;
-      color: white;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,0,0,0.5);
-      width: 300px;
-    }
+        #code-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #1a1a1a;
+            border: none;
+            color: white;
+        }
 
-    #code-input {
-      width: calc(100% - 20px);
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #1a1a1a;
-      border: none;
-      color: white;
-    }
+        #submit-code {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    #submit-code {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+        #submit-code:hover {
+            background-color: #cc0000;
+        }
 
-    #submit-code:hover {
-      background-color: #cc0000;
-    }
+        #duck-gif {
+            display: none;
+            max-width: 100%;
+        }
 
-    #duck-gif {
-      display: none;
-      max-width: 100%;
-    }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
 
-    @keyframes gradientAnimation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    .button-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .button-container button {
-        background-color: #808080;
-        border-radius: 50%;
-        border: none;
-        color: white;
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-        margin: 0 10px;
-        cursor: pointer;
-        transition: background-color .3s ease-in-out;
-    }
-    
-    .button-container button:hover {
-        background-color: #a0a0a0;
-    }
-
-    /* New styles for chat button and warning popup */
-    #chat-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    #chat-warning {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #2a2a2a;
-      border-radius: 10px;
-      padding: 20px;
-      z-index: 1001;
-      color: white;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,0,0,0.5);
-      width: 300px;
-    }
-
-    #chat-warning h2 {
-      color: #ff0000;
-      margin-top: 0;
-    }
-
-    #chat-warning p {
-      margin-bottom: 20px;
-    }
-
-    #chat-warning button {
-      margin: 0 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #chat-warning-cancel {
-      background-color: #808080;
-      color: white;
-    }
-
-    #chat-warning-proceed {
-      background-color: #ff0000;
-      color: white;
-    }
-  </style>
+        .button-container button {
+            background-color: #808080;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color .3s ease-in-out;
+        }
+        
+        .button-container button:hover {
+            background-color: #a0a0a0;
+        }
+    </style>
 </head>
 <body>
-  
-<div class="creepy-title">Rubellite</div>
+    <!-- Calculator Page -->
+    <div class="calculator-page" id="calculator-page">
+        <header>
+            <h1 class="header-title">Advanced Math Calculator</h1>
+        </header>
+        
+        <div class="calculator-container">
+            <div class="mode-toggle">
+                <button class="mode-button active" id="standard-mode">Standard</button>
+                <button class="mode-button" id="graphing-mode">Graphing</button>
+            </div>
+            
+            <!-- Standard Calculator -->
+            <div class="standard-calculator active" id="standard-calculator">
+                <div class="calc-display">
+                    <!-- Added a text input field for easier typing -->
+                    <input type="text" id="calc-input" class="calc-input" placeholder="Type here or use buttons below">
+                    <div class="calc-history" id="calc-history"></div>
+                    <div class="calc-current" id="calc-current">0</div>
+                </div>
+                
+                <div class="calc-buttons">
+                    <button class="calc-button clear" data-action="clear">AC</button>
+                    <button class="calc-button" data-action="backspace">⌫</button>
+                    <button class="calc-button function" data-action="percent">%</button>
+                    <button class="calc-button operator" data-action="divide">÷</button>
+                    
+                    <button class="calc-button" data-value="7">7</button>
+                    <button class="calc-button" data-value="8">8</button>
+                    <button class="calc-button" data-value="9">9</button>
+                    <button class="calc-button operator" data-action="multiply">×</button>
+                    
+                    <button class="calc-button" data-value="4">4</button>
+                    <button class="calc-button" data-value="5">5</button>
+                    <button class="calc-button" data-value="6">6</button>
+                    <button class="calc-button operator" data-action="subtract">−</button>
+                    
+                    <button class="calc-button" data-value="1">1</button>
+                    <button class="calc-button" data-value="2">2</button>
+                    <button class="calc-button" data-value="3">3</button>
+                    <button class="calc-button operator" data-action="add">+</button>
+                    
+                    <button class="calc-button" data-value="0">0</button>
+                    <button class="calc-button" data-value=".">.</button>
+                    <button class="calc-button function" data-action="negate">±</button>
+                    <button class="calc-button equals" data-action="calculate">=</button>
+                </div>
+                
+                <div class="function-buttons" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px;">
+                    <button class="calc-button function" data-action="sin">sin</button>
+                    <button class="calc-button function" data-action="cos">cos</button>
+                    <button class="calc-button function" data-action="tan">tan</button>
+                    <button class="calc-button function" data-action="sqrt">√</button>
+                    
+                    <button class="calc-button function" data-action="log">log</button>
+                    <button class="calc-button function" data-action="ln">ln</button>
+                    <button class="calc-button function" data-action="power">x^y</button>
+                    <button class="calc-button function" data-action="pi">π</button>
+                </div>
+            </div>
+            
+            <!-- Graphing Calculator -->
+            <div class="graphing-calculator" id="graphing-calculator">
+                <div class="display-container">
+                    <div class="input-area">
+                        <input type="text" id="expression-input" placeholder="Enter a function (e.g., x^2, sin(x), 2*x+1)" autocomplete="off">
+                    </div>
+                    
+                    <div class="graph-area">
+                        <canvas id="graph-canvas"></canvas>
+                        <div class="axis x-axis"></div>
+                        <div class="axis y-axis"></div>
+                        <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+                        <div class="zoom-controls">
+                            <button class="zoom-button" id="zoom-in">+</button>
+                            <button class="zoom-button" id="zoom-out">-</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="button" id="graph-button">Graph</button>
+                    <button class="button clear" id="clear-button">Clear</button>
+                </div>
+                
+                <div class="function-list">
+                    <h3>Graphed Functions</h3>
+                    <div id="function-items">
+                        <!-- Function items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rubellite Page -->
+    <div class="rubellite-page" id="rubellite-page">
+        <div class="creepy-title">Rubellite</div>
 
-<div class="quote-container" id="quote"></div>
+        <div class="quote-container" id="quote"></div>
 
-<div id="popup-box">
-    <p>What's The Code?</p>
-    <input type="text" id="code-input" placeholder="Enter code">
-    <button id="submit-code">Submit</button>
-    <img id="duck-gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG15eXJoMG0ydHFwNTA5MzRsbDhxaWtmNWdsZDlzOGczN3A1bnAwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PQHZH0iHMCmrNhRcE9/giphy.gif" alt="Duck GIF">
-</div>
+        <div id="popup-box">
+            <p>What's The Code?</p>
+            <input type="text" id="code-input" placeholder="Enter code">
+            <button id="submit-code">Submit</button>
+            <img id="duck-gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZG15eXJoMG0ydHFwNTA5MzRsbDhxaWtmNWdsZDlzOGczN3A1bnAwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PQHZH0iHMCmrNhRcE9/giphy.gif" alt="Duck GIF">
+        </div>
 
-<div class="button-container">
-   <button id="gamesButton" data-tooltip="Games">🎮</button>
-   <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
-   <button id="moviesButton" data-tooltip="Movies">📹</button>
-   <button id="masksButton" data-tooltip="Apps">🚀</button>
-</div>
+        <div class="button-container">
+           <button id="gamesButton" data-tooltip="Games">🎮</button>
+           <button id="classicsButton" data-tooltip="Classic Games">🕹️</button>
+           <button id="moviesButton" data-tooltip="Movies">📹</button>
+           <button id="masksButton" data-tooltip="Apps">🚀</button>
+        </div>
+    </div>
+    
+    <script>
+        // Mode switching
+        const standardModeButton = document.getElementById('standard-mode');
+        const graphingModeButton = document.getElementById('graphing-mode');
+        const standardCalculator = document.getElementById('standard-calculator');
+        const graphingCalculator = document.getElementById('graphing-calculator');
+        
+        standardModeButton.addEventListener('click', () => {
+            standardModeButton.classList.add('active');
+            graphingModeButton.classList.remove('active');
+            standardCalculator.classList.add('active');
+            graphingCalculator.classList.remove('active');
+        });
+        
+        graphingModeButton.addEventListener('click', () => {
+            graphingModeButton.classList.add('active');
+            standardModeButton.classList.remove('active');
+            graphingCalculator.classList.add('active');
+            standardCalculator.classList.remove('active');
+            resizeCanvas(); // Ensure canvas is properly sized
+        });
+        
+        // Standard Calculator Logic
+        const calcInput = document.getElementById('calc-input');
+        const calcHistory = document.getElementById('calc-history');
+        const calcCurrent = document.getElementById('calc-current');
+        let currentInput = '0';
+        let previousInput = '';
+        let operation = null;
+        let resetInput = false;
+        
+        // Check for the secret trigger in the input field
+        calcInput.addEventListener('input', () => {
+            if (calcInput.value.toLowerCase() === 'games') {
+                transitionToRubellite();
+            }
+            currentInput = calcInput.value || '0';
+            calcCurrent.textContent = currentInput;
+        });
+        
+        calcInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                try {
+                    // Try to evaluate the expression
+                    const result = eval(currentInput.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-'));
+                    calcHistory.textContent = `${currentInput} =`;
+                    currentInput = result.toString();
+                    calcCurrent.textContent = currentInput;
+                    calcInput.value = currentInput;
+                } catch (e) {
+                    // If it's not a valid expression, check if it's "games"
+                    if (currentInput.toLowerCase() === 'games') {
+                        transitionToRubellite();
+                    } else {
+                        calcCurrent.textContent = 'Error';
+                    }
+                }
+            }
+        });
+        
+        // Add event listeners to all calculator buttons
+        document.querySelectorAll('.calc-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const action = button.dataset.action;
+                const value = button.dataset.value;
+                
+                if (value) {
+                    handleNumberInput(value);
+                } else if (action) {
+                    handleAction(action);
+                }
+                
+                updateDisplay();
+            });
+        });
+        
+        function handleNumberInput(value) {
+            if (currentInput === '0' || resetInput) {
+                currentInput = value;
+                resetInput = false;
+            } else {
+                currentInput += value;
+            }
+            calcInput.value = currentInput;
+        }
+        
+        function handleAction(action) {
+            switch (action) {
+                case 'clear':
+                    currentInput = '0';
+                    previousInput = '';
+                    operation = null;
+                    calcInput.value = '';
+                    break;
+                    
+                case 'backspace':
+                    if (currentInput.length > 1) {
+                        currentInput = currentInput.slice(0, -1);
+                    } else {
+                        currentInput = '0';
+                    }
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'calculate':
+                    try {
+                        // Try to evaluate the expression directly
+                        if (calcInput.value) {
+                            const expr = calcInput.value.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+                            const result = eval(expr);
+                            calcHistory.textContent = `${calcInput.value} =`;
+                            currentInput = result.toString();
+                            calcInput.value = currentInput;
+                        } else if (previousInput && operation) {
+                            const result = calculate(parseFloat(previousInput), parseFloat(currentInput), operation);
+                            calcHistory.textContent = `${previousInput} ${operation} ${currentInput} =`;
+                            currentInput = result.toString();
+                            calcInput.value = currentInput;
+                            previousInput = '';
+                            operation = null;
+                        }
+                    } catch (e) {
+                        calcCurrent.textContent = 'Error';
+                    }
+                    break;
+                    
+                case 'add':
+                case 'subtract':
+                case 'multiply':
+                case 'divide':
+                    if (previousInput && operation && !resetInput) {
+                        const result = calculate(parseFloat(previousInput), parseFloat(currentInput), operation);
+                        currentInput = result.toString();
+                        calcInput.value = currentInput;
+                    }
+                    previousInput = currentInput;
+                    operation = action;
+                    resetInput = true;
+                    calcHistory.textContent = `${previousInput} ${getOperationSymbol(action)}`;
+                    break;
+                    
+                case 'percent':
+                    currentInput = (parseFloat(currentInput) / 100).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'negate':
+                    currentInput = (parseFloat(currentInput) * -1).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'sin':
+                    currentInput = Math.sin(parseFloat(currentInput) * (Math.PI / 180)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'cos':
+                    currentInput = Math.cos(parseFloat(currentInput) * (Math.PI / 180)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'tan':
+                    currentInput = Math.tan(parseFloat(currentInput) * (Math.PI / 180)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'sqrt':
+                    currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'log':
+                    currentInput = Math.log10(parseFloat(currentInput)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'ln':
+                    currentInput = Math.log(parseFloat(currentInput)).toString();
+                    calcInput.value = currentInput;
+                    break;
+                    
+                case 'power':
+                    previousInput = currentInput;
+                    operation = 'power';
+                    resetInput = true;
+                    calcHistory.textContent = `${previousInput} ^`;
+                    break;
+                    
+                case 'pi':
+                    currentInput = Math.PI.toString();
+                    calcInput.value = currentInput;
+                    break;
+            }
+        }
+        
+        function calculate(a, b, operation) {
+            switch (operation) {
+                case 'add': return a + b;
+                case 'subtract': return a - b;
+                case 'multiply': return a * b;
+                case 'divide': return a / b;
+                case 'power': return Math.pow(a, b);
+                default: return b;
+            }
+        }
+        
+        function getOperationSymbol(operation) {
+            switch (operation) {
+                case 'add': return '+';
+                case 'subtract': return '−';
+                case 'multiply': return '×';
+                case 'divide': return '÷';
+                case 'power': return '^';
+                default: return '';
+            }
+        }
+        
+        function updateDisplay() {
+            calcCurrent.textContent = currentInput;
+        }
+        
+        // Graphing Calculator Logic
+        const canvas = document.getElementById('graph-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas dimensions to match its display size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawGrid();
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        // Graph state
+        let scale = 20; // pixels per unit
+        let offsetX = 0;
+        let offsetY = 0;
+        let functions = [];
+        let colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+        
+        // Mouse tracking
+        let isDragging = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        
+        // Draw grid and axes
+        function drawGrid() {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Calculate center position
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+            
+            // Draw grid
+            ctx.strokeStyle = '#ecf0f1';
+            ctx.lineWidth = 0.5;
+            
+            // Vertical grid lines
+            for (let x = centerX % scale; x < width; x += scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let y = centerY % scale; y < height; y += scale) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            // Draw axes
+            ctx.strokeStyle = '#7f8c8d';
+            ctx.lineWidth = 2;
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, height);
+            ctx.stroke();
+            
+            // Draw axis labels
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '12px Arial';
+            
+            // X-axis labels
+            for (let x = Math.floor(-centerX / scale) * scale; x <= Math.ceil((width - centerX) / scale) * scale; x += scale) {
+                if (x === 0) continue; // Skip zero
+                const pixelX = centerX + x;
+                ctx.fillText(x / scale, pixelX - 5, centerY + 15);
+            }
+            
+            // Y-axis labels
+            for (let y = Math.floor(-centerY / scale) * scale; y <= Math.ceil((height - centerY) / scale) * scale; y += scale) {
+                if (y === 0) continue; // Skip zero
+                const pixelY = centerY + y;
+                ctx.fillText(-y / scale, centerX + 5, pixelY + 4);
+            }
+            
+            // Origin label
+            ctx.fillText('0', centerX - 10, centerY + 15);
+            
+            // Draw all functions
+            functions.forEach(func => {
+                drawFunction(func.expression, func.color);
+            });
+        }
+        
+        // Draw a function on the canvas
+        function drawFunction(expression, color) {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2 + offsetX;
+            const centerY = height / 2 + offsetY;
+            
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            let isFirstPoint = true;
+            
+            for (let pixelX = 0; pixelX < width; pixelX++) {
+                const x = (pixelX - centerX) / scale;
+                
+                try {
+                    // Replace x in the expression and evaluate
+                    const expr = expression.replace(/x/g, `(${x})`);
+                    const y = evaluateExpression(expr);
+                    
+                    if (!isFinite(y)) continue;
+                    
+                    const pixelY = centerY - y * scale;
+                    
+                    if (isFirstPoint) {
+                        ctx.moveTo(pixelX, pixelY);
+                        isFirstPoint = false;
+                    } else {
+                        ctx.lineTo(pixelX, pixelY);
+                    }
+                } catch (e) {
+                    // Skip errors in evaluation
+                    continue;
+                }
+            }
+            
+            ctx.stroke();
+        }
+        
+        // Evaluate a mathematical expression
+        function evaluateExpression(expr) {
+            // Replace mathematical functions with JavaScript equivalents
+            expr = expr.replace(/sin\(/g, 'Math.sin(')
+                      .replace(/cos\(/g, 'Math.cos(')
+                      .replace(/tan\(/g, 'Math.tan(')
+                      .replace(/sqrt\(/g, 'Math.sqrt(')
+                      .replace(/log\(/g, 'Math.log10(')
+                      .replace(/ln\(/g, 'Math.log(')
+                      .replace(/abs\(/g, 'Math.abs(')
+                      .replace(/\^/g, '**')
+                      .replace(/pi/g, 'Math.PI');
+            
+            // Evaluate the expression
+            return Function('"use strict"; return (' + expr + ')')();
+        }
+        
+        // Add a function to the graph
+        function addFunction() {
+            const input = document.getElementById('expression-input');
+            const expression = input.value.trim();
+            
+            // Check for the secret trigger
+            if (expression.toLowerCase() === 'games') {
+                // Transition to Rubellite
+                transitionToRubellite();
+                return;
+            }
+            
+            if (expression === '') return;
+            
+            try {
+                // Test if the expression is valid
+                const testX = 1;
+                const testExpr = expression.replace(/x/g, `(${testX})`);
+                evaluateExpression(testExpr);
+                
+                // Add the function to the list
+                const color = colors[functions.length % colors.length];
+                functions.push({ expression, color });
+                
+                // Update the function list display
+                updateFunctionList();
+                
+                // Redraw the graph
+                drawGrid();
+            } catch (e) {
+                alert('Invalid expression. Please check your syntax.');
+            }
+        }
+        
+        // Update the function list display
+        function updateFunctionList() {
+            const functionItems = document.getElementById('function-items');
+            functionItems.innerHTML = '';
+            
+            functions.forEach((func, index) => {
+                const item = document.createElement('div');
+                item.className = 'function-item';
+                
+                const colorSpan = document.createElement('span');
+                colorSpan.className = 'function-color';
+                colorSpan.style.backgroundColor = func.color;
+                
+                const expressionSpan = document.createElement('span');
+                expressionSpan.textContent = `y = ${func.expression}`;
+                
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.className = 'button clear';
+                removeButton.style.padding = '3px 8px';
+                removeButton.style.fontSize = '12px';
+                removeButton.onclick = () => {
+                    functions.splice(index, 1);
+                    updateFunctionList();
+                    drawGrid();
+                };
+                
+                item.appendChild(colorSpan);
+                item.appendChild(expressionSpan);
+                item.appendChild(removeButton);
+                
+                functionItems.appendChild(item);
+            });
+        }
+        
+        // Clear all functions
+        function clearFunctions() {
+            functions = [];
+            updateFunctionList();
+            drawGrid();
+        }
+        
+        // Update coordinates display
+        function updateCoordinates(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            
+            const centerX = canvas.width / 2 + offsetX;
+            const centerY = canvas.height / 2 + offsetY;
+            
+            const x = (mouseX - centerX) / scale;
+            const y = -(mouseY - centerY) / scale;
+            
+            document.getElementById('coordinates').textContent = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
+        }
+        
+        // Event listeners for graphing calculator
+        document.getElementById('graph-button').addEventListener('click', addFunction);
+        document.getElementById('clear-button').addEventListener('click', clearFunctions);
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            scale *= 1.2;
+            drawGrid();
+        });
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            scale /= 1.2;
+            drawGrid();
+        });
+        
+        // Enter key to graph
+        document.getElementById('expression-input').addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                addFunction();
+            }
+        });
+        
+        // Mouse events for dragging and coordinates
+        canvas.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            lastMouseX = event.clientX;
+            lastMouseY = event.clientY;
+        });
+        
+        canvas.addEventListener('mousemove', (event) => {
+            updateCoordinates(event);
+            
+            if (isDragging) {
+                const deltaX = event.clientX - lastMouseX;
+                const deltaY = event.clientY - lastMouseY;
+                
+                offsetX += deltaX;
+                offsetY += deltaY;
+                
+                lastMouseX = event.clientX;
+                lastMouseY = event.clientY;
+                
+                drawGrid();
+            }
+        });
+        
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+        
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+        
+        // Transition function to switch from calculator to Rubellite
+        function transitionToRubellite() {
+            const calculatorPage = document.getElementById('calculator-page');
+            const rubellitePage = document.getElementById('rubellite-page');
+            
+            // Fade out calculator
+            calculatorPage.classList.add('fade-out');
+            
+            // After a short delay, fade in Rubellite
+            setTimeout(() => {
+                document.body.style.background = 'linear-gradient(45deg, #ff0000, #000000)';
+                rubellitePage.classList.add('fade-in');
+                
+                // Initialize Rubellite functionality
+                initRubellite();
+            }, 1500);
+        }
+        
+        // Initialize Rubellite functionality
+        function initRubellite() {
+            // Rubellite code
+            let typedCode = '';
+            const popupBox = document.getElementById('popup-box');
+            const codeInput = document.getElementById('code-input');
+            const submitCode = document.getElementById('submit-code');
+            const duckGif = document.getElementById('duck-gif');
 
-<!-- New chat button -->
-<button id="chat-button">💬</button>
+            document.addEventListener('keydown', function(e) {
+               typedCode += e.key.toLowerCase();
+               if (typedCode.endsWith('codes4sale')) {
+                   popupBox.style.display = 'block';
+                   typedCode = '';
+               }
+            });
 
-<!-- New chat warning popup -->
-<div id="chat-warning">
-  <h2>WARNING</h2>
-  <p>This is a place to chat with everyone using the site. Refreshing will cause in deleting all the messages for your side. Do you wish to continue?</p>
-  <button id="chat-warning-cancel">Cancel</button>
-  <button id="chat-warning-proceed">Proceed</button>
-</div>
+            let resetTimer;
+            document.addEventListener('keydown', function() {
+                clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => typedCode = '', 2000);
+            });
 
-<script>
-let typedCode = '';
-const popupBox = document.getElementById('popup-box');
-const codeInput = document.getElementById('code-input');
-const submitCode = document.getElementById('submit-code');
-const duckGif = document.getElementById('duck-gif');
+            submitCode.addEventListener('click', handleCodeSubmit);
+            codeInput.addEventListener('keypress', function(e) {
+               if (e.key === 'Enter') handleCodeSubmit();
+            });
 
-document.addEventListener('keydown', function(e) {
-   typedCode += e.key.toLowerCase();
-   if (typedCode.endsWith('codes4sale')) {
-       popupBox.style.display = 'block';
-       typedCode = '';
-   }
-});
+            function handleCodeSubmit() {
+               const code = codeInput.value.trim();
+               codeInput.value = '';
 
-let resetTimer;
-document.addEventListener('keydown', function() {
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => typedCode = '', 2000);
-});
+               switch(code.toLowerCase()) {
+                   case 'selenite':
+                       alert("What's that? Never heard of them!!!");
+                       break;
+                   case 'duck':
+                       alert("duck");
+                       duckGif.style.display = 'block';
+                       setTimeout(() => duckGif.style.display = 'none', 3000);
+                       break;
+                   case 'dead by daylight':
+                       alert("THAT'S THE CREATORS FAVORITE GAME!!!");
+                       break;
+                   case 'nicholas connor blackledge':
+                       alert("Ahem... what the heck?");
+                       break;
+                   case 'kaylee':
+                       alert("Shhhhh!!!");
+                       break;
+                   case 'ducks pond':
+                       alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until February 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
+                       break;
+                   case 'escape room':
+                       alert("Escape room? Hah! Let's see if you can actually beat one! change the '/start' in the link to '/escape' to play!");
+                       break;
+                   default:
+                       alert("Nope, but there are a lot! Find Them!");
+               }
+            }
 
-submitCode.addEventListener('click', handleCodeSubmit);
-codeInput.addEventListener('keypress', function(e) {
-   if (e.key === 'Enter') handleCodeSubmit();
-});
+            window.addEventListener('click', function(e) {
+               if (e.target === popupBox || popupBox.contains(e.target)) return;
+               popupBox.style.display = 'none';
+               duckGif.style.display = 'none';
+            });
 
-function handleCodeSubmit() {
-   const code = codeInput.value.trim();
-   codeInput.value = '';
+            document.getElementById('gamesButton').addEventListener('click', function() {
+               location.href = 'all.html';
+            });
+            document.getElementById('classicsButton').addEventListener('click', function() {
+               location.href = 'classics.html';
+            });
+            document.getElementById('moviesButton').addEventListener('click', function() {
+               location.href = 'https://duckspondwebsite.github.io/m0V1es/';
+            });
+            document.getElementById('masksButton').addEventListener('click', function() {
+               location.href = 'apps.html';
+            });
 
-   switch(code.toLowerCase()) {
-       case 'selenite':
-           alert("What's that? Never heard of them!!!");
-           break;
-       case 'duck':
-           alert("duck");
-           duckGif.style.display = 'block';
-           setTimeout(() => duckGif.style.display = 'none', 3000);
-           break;
-       case 'dead by daylight':
-           alert("THAT'S THE CREATORS FAVORITE GAME!!!");
-           break;
-       case 'nicholas connor blackledge':
-           alert("Ahem... what the heck?");
-           break;
-       case 'kaylee':
-           alert("Shhhhh!!!");
-           break;
-       case 'ducks pond':
-           alert("Ah, Ducks Pond. The beloved unbloc*ed game site for school was sadly taken down on behalf on the AISD district... The site lasted until February 29th, 2025 and that day was tragic for a lot of people. Show some love for Ducks Pond!");
-           break;
-       case 'escape room':
-           alert("Escape room? Hah! Let's see if you can actually beat one! change the '/start' in the link to '/escape' to play!");
-           break;
-       default:
-           alert("Nope, but there are a lot! Find Them!");
-   }
-}
+            const quotes = [
+              "Can we normalize NOT askig for any football bros?", 
+              "Ducks Pond (Rebooted) 2021-2025.", 
+              "I got insperation from Selenite? Yea, i did.", 
+              "Unleashing the full potential of the internet for you.", 
+              "My iPad passcode is 1234567890 btw.", 
+              "Why don't scientists trust atoms? Because they make up everything.", 
+              "Elevating your online experience to new heights.", 
+              "#Relatable.",
+              "Water Is Wet.",
+              "Anxiety, STOP.",
+              "Type In \"codes4sale\" to get a surprise."
+            ];
 
-window.addEventListener('click', function(e) {
-   if (e.target === popupBox || popupBox.contains(e.target)) return;
-   popupBox.style.display = 'none';
-   duckGif.style.display = 'none';
-});
+            function shuffle(array) {
+               for (let i = array.length - 1; i > 0; i--) {
+                   const j = Math.floor(Math.random() * (i + 1));
+                   [array[i], array[j]] = [array[j], array[i]];
+               }
+            }
 
-document.getElementById('gamesButton').addEventListener('click', function() {
-   location.href = 'all.html';
-});
-document.getElementById('classicsButton').addEventListener('click', function() {
-   location.href = 'classics.html';
-});
-document.getElementById('moviesButton').addEventListener('click', function() {
-   location.href = 'https://duckspondwebsite.github.io/m0V1es/';
-});
-document.getElementById('masksButton').addEventListener('click', function() {
-   location.href = 'apps.html';
-});
+            function displayRandomQuote() {
+              let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
+              const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
 
-const quotes = [
-  "Can we normalize NOT askig for any football bros?", 
-  "Ducks Pond (Rebooted) 2021-2025.", 
-  "I got insperation from Selenite? Yea, i did.", 
-  "Unleashing the full potential of the internet for you.", 
-  "My iPad passcode is 1234567890 btw.", 
-  "Why don't scientists trust atoms? Because they make up everything.", 
-  "Elevating your online experience to new heights.", 
-  "#Relatable.",
-  "Water Is Wet.",
-  "Anxiety, STOP.",
-  "Type In \"codes4sale\" to get a surprise."
-];
+              if (availableQuotes.length === 0) {
+                shownQuotes = [];
+                localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+                displayRandomQuote();
+                return; 
+              }
 
-function shuffle(array) {
-   for (let i = array.length - 1; i > 0; i--) {
-       const j = Math.floor(Math.random() * (i + 1));
-       [array[i], array[j]] = [array[j], array[i]];
-   }
-}
+              shuffle(availableQuotes);
+              const selectedQuote = availableQuotes[0];
+              
+              const quoteElement = document.getElementById("quote");
+              quoteElement.innerText = selectedQuote;
+              
+              // Remove the visible class
+              quoteElement.classList.remove('visible');
+              
+              // Force a reflow
+              void quoteElement.offsetWidth;
+              
+              // Add the visible class back to trigger the transition
+              quoteElement.classList.add('visible');
 
-function displayRandomQuote() {
-  let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes")) || [];
-  const availableQuotes = quotes.filter(q => !shownQuotes.includes(q));
+              shownQuotes.push(selectedQuote);
+              localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
+            }
 
-  if (availableQuotes.length === 0) {
-    shownQuotes = [];
-    localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
-    displayRandomQuote();
-    return; 
-  }
-
-  shuffle(availableQuotes);
-  const selectedQuote = availableQuotes[0];
-  
-  const quoteElement = document.getElementById("quote");
-  quoteElement.innerText = selectedQuote;
-  
-  // Remove the visible class
-  quoteElement.classList.remove('visible');
-  
-  // Force a reflow
-  void quoteElement.offsetWidth;
-  
-  // Add the visible class back to trigger the transition
-  quoteElement.classList.add('visible');
-
-  shownQuotes.push(selectedQuote);
-  localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
-}
-
-displayRandomQuote();
-
-// New chat functionality
-const chatButton = document.getElementById('chat-button');
-const chatWarning = document.getElementById('chat-warning');
-const chatWarningCancel = document.getElementById('chat-warning-cancel');
-const chatWarningProceed = document.getElementById('chat-warning-proceed');
-
-chatButton.addEventListener('click', function() {
-  chatWarning.style.display = 'block';
-});
-
-chatWarningCancel.addEventListener('click', function() {
-  chatWarning.style.display = 'none';
-});
-
-chatWarningProceed.addEventListener('click', function() {
-  window.location.href = 'chatting/chat.html';
-});
-
-// Close warning if clicked outside
-window.addEventListener('click', function(e) {
-  if (e.target === chatWarning) {
-    chatWarning.style.display = 'none';
-  }
-});
-</script>
+            displayRandomQuote();
+        }
+        
+        // Initial draw
+        drawGrid();
+    </script>
 </body>
 </html>
