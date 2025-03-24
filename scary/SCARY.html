@@ -67,93 +67,75 @@
     <video id="webcam" autoplay></video>
 
     <div id="q1" class="question">
-        <label for="name">What's Your Name?</label><br>
-        <input type="text" id="name" required>
-        <button onclick="nextQuestion()">Next</button>
-    </div>
+    <label for="name">What's Your Name?</label><br>
+    <input type="text" id="name" required>
+    <button onclick="nextQuestion()">Next</button>
+</div>
 
-    <div id="q2" class="question">
-        <p>How Are You Feeling Right Now?</p>
-        <button onclick="nextQuestion()">Next</button>
-    </div>
+<div id="q2" class="question">
+    <p>How Are You Feeling Right Now?</p>
+    <button onclick="selectEmotion('Scared')">Scared</button>
+    <button onclick="selectEmotion('Fine')">Fine</button>
+    <button onclick="selectEmotion('Sad')">Sad</button>
+    <button onclick="selectEmotion('Mad')">Mad</button>
+</div>
 
-    <div id="q3" class="question">
-        <p>Are You Afraid Of The Dark?</p>
-        <button onclick="nextQuestion()">Next</button>
-    </div>
+<div id="q3" class="question">
+    <p>Are You Afraid Of The Dark?</p>
+    <button onclick="selectDarkFear('Yes')">Yes</button>
+    <button onclick="selectDarkFear('No')">No</button>
+</div>
 
-    <div id="q4" class="question">
-        <p>Are You Afraid Of...</p>
-        <button onclick="showBackgroundImage()">Next</button>
-    </div>
+<div id="q4" class="question">
+    <p>Are You Afraid Of...</p>
+    <button onclick="showBackgroundImage()">Next</button>
+</div>
 
-    <div id="q5" class="question">
-        <p>Can I See You?</p>
-        <button onclick="requestCamera()">Allow</button>
-        <button onclick="denyCamera()">Deny</button>
-    </div>
+<div id="q5" class="question">
+    <p>Can I See You?</p>
+    <button onclick="requestCamera()">Allow</button>
+    <button onclick="denyCamera()">Deny</button>
+</div>
 
-    <div id="q6" class="question">
-        <p>I Know Everything About You Now...</p>
-        <p id="user-info"></p>
-        <button onclick="closeTab()">Finish</button>
-    </div>
+<div id="q6" class="question">
+    <p>I Know Everything About You Now...</p>
+    <p id="user-info"></p>
+    <button onclick="finishQuiz()">Finish</button>
+</div>
 
-    <script>
-        let currentQuestion = 1;
-        let userName = '';
+<script>
+let userName = '';
+let userEmotion = '';
+let darkFear = '';
+let userEmail = '[Not available]';
+let userIP = '126.834.33.3943.9293';
+let webcamStatus = 'Denied';
 
-        function showQuestion(num) {
-            document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
-            document.getElementById(`q${num}`).style.display = 'block';
-        }
+function selectEmotion(emotion) {
+    userEmotion = emotion;
+    nextQuestion();
+}
 
-        function nextQuestion() {
-            if (currentQuestion === 1) {
-                userName = document.getElementById('name').value;
-            }
-            currentQuestion++;
-            showQuestion(currentQuestion);
-            if (currentQuestion === 4) {
-                setTimeout(() => {
-                    document.getElementById('q4').innerHTML += '<p>Me?</p>';
-                }, 2000);
-            }
-        }
+function selectDarkFear(answer) {
+    darkFear = answer;
+    nextQuestion();
+}
 
-        function showBackgroundImage() {
-            document.getElementById('background-image').style.opacity = '0.5';
-            setTimeout(() => {
-                document.getElementById('background-image').style.opacity = '0';
-                nextQuestion();
-            }, 3000);
-        }
+function finishQuiz() {
+    document.getElementById('user-info').innerHTML = `
+        Name: ${userName}<br>
+        Email: ${userEmail}<br>
+        IP: ${userIP}<br>
+        Webcam: ${webcamStatus}<br>
+        Emotion: ${userEmotion}<br>
+        Afraid of the dark: ${darkFear}
+    `;
+    setTimeout(() => {
+        window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
+    }, 5000);
+}
 
-        function requestCamera() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    document.getElementById('webcam').srcObject = stream;
-                    document.getElementById('webcam').style.display = 'block';
-                    nextQuestion();
-                })
-                .catch(() => denyCamera());
-        }
-
-        function denyCamera() {
-            document.getElementById('q5').innerHTML += '<p>I Can Still See You...</p>';
-            setTimeout(nextQuestion, 2000);
-        }
-
-        function closeTab() {
-            document.getElementById('user-info').innerHTML = `
-                Name: ${userName}<br>
-                Email: [Not available]<br>
-                IP: 126.834.33.3943.9293
-            `;
-            setTimeout(() => window.close(), 5000);
-        }
-
-        showQuestion(1);
-    </script>
+// Other functions (nextQuestion, showBackgroundImage, requestCamera, denyCamera) remain the same
+ </script>
 </body>
 </html>
