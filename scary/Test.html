@@ -19,20 +19,20 @@
         h1 {
             font-size: 3em;
             margin-bottom: 30px;
-            overflow: hidden;
-            border-right: .15em solid white;
             white-space: nowrap;
-            letter-spacing: .15em;
+            overflow: hidden;
+            border-right: .15em solid white; /* Creates the blinking caret */
+            width: 12ch; /* Adjust this value to match the length of your text */
             animation: 
-                typing 3.5s steps(40, end),
+                typing 3.5s steps(12, end), /* Steps should match the number of characters in your text */
                 blink-caret .75s step-end infinite;
         }
         @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+            from { width: 0; }
+            to { width: 12ch; } /* Match this value to the number of characters in your text */
         }
         @keyframes blink-caret {
-            from, to { border-color: transparent }
+            from, to { border-color: transparent; }
             50% { border-color: white; }
         }
         button {
@@ -43,7 +43,7 @@
             color: white;
             border: none;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease-in-out;
         }
         button:hover {
             background-color: #555;
