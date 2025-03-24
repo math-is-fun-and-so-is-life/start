@@ -96,7 +96,7 @@
     <!-- Question 4 -->
     <div id="q4" class="question">
         <p>Are You Afraid Of...</p>
-        <button onclick="showBackgroundImage()">Next</button>
+        <button id="q4-next-button" onclick="showBackgroundImage()">Next</button>
     </div>
 
     <!-- Question 5 -->
@@ -138,15 +138,7 @@
             }
             
             currentQuestion++;
-            
             showQuestion(currentQuestion);
-            
-            // Special behavior for Question 4
-            if (currentQuestion === 4) {
-                setTimeout(() => {
-                    document.getElementById('q4').innerHTML += '<p>Me?</p>';
-                }, 2000);
-            }
         }
 
         function selectEmotion(emotion) {
@@ -160,25 +152,22 @@
         }
 
         function showBackgroundImage() {
-    // Remove the "Next" button
-    document.getElementById('q4-next-button').style.display = 'none';
-    
-    // Show the background image
-    document.getElementById('background-image').style.opacity = '0.5';
-    
-    // Add "Me?" text after 2 seconds
-    setTimeout(() => {
-        document.getElementById('q4').innerHTML += '<p>Me?</p>';
-    }, 2000);
+            // Remove the "Next" button
+            document.getElementById('q4-next-button').style.display = 'none';
+            
+            // Show the background image
+            document.getElementById('background-image').style.opacity = '0.5';
+            
+            // Add "Me?" text after 2 seconds
+            setTimeout(() => {
+                document.getElementById('q4').innerHTML += '<p>Me?</p>';
+            }, 2000);
 
-    // Hide the background image and move to next question after 5 seconds
-    setTimeout(() => {
-        document.getElementById('background-image').style.opacity = '0';
-        nextQuestion();
-    }, 5000);
-}
-
-// ... (rest of the code remains the same)
+            // Hide the background image and move to next question after 5 seconds
+            setTimeout(() => {
+                document.getElementById('background-image').style.opacity = '0';
+                nextQuestion();
+            }, 5000);
         }
 
         function requestCamera() {
