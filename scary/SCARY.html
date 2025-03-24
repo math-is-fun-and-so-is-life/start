@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions</title>
+    <title>SCARY.html</title>
     <style>
         body {
             background-color: black;
@@ -39,6 +39,10 @@
             padding: 10px 20px;
             font-size: 18px;
             cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #555;
         }
         #background-image {
             position: fixed;
@@ -49,7 +53,7 @@
             background-image: url('https://i.pinimg.com/474x/1a/8c/43/1a8c43da5ee25549ee92141ad69a529d.jpg');
             background-size: cover;
             opacity: 0;
-            transition: opacity 2s;
+            transition: opacity 2s ease-in-out;
             z-index: -1;
         }
         #webcam {
@@ -66,76 +70,133 @@
     <div id="background-image"></div>
     <video id="webcam" autoplay></video>
 
+    <!-- Question 1 -->
     <div id="q1" class="question">
-    <label for="name">What's Your Name?</label><br>
-    <input type="text" id="name" required>
-    <button onclick="nextQuestion()">Next</button>
-</div>
+        <label for="name">What's Your Name?</label><br>
+        <input type="text" id="name" required>
+        <button onclick="nextQuestion()">Next</button>
+    </div>
 
-<div id="q2" class="question">
-    <p>How Are You Feeling Right Now?</p>
-    <button onclick="selectEmotion('Scared')">Scared</button>
-    <button onclick="selectEmotion('Fine')">Fine</button>
-    <button onclick="selectEmotion('Sad')">Sad</button>
-    <button onclick="selectEmotion('Mad')">Mad</button>
-</div>
+    <!-- Question 2 -->
+    <div id="q2" class="question">
+        <p>How Are You Feeling Right Now?</p>
+        <button onclick="selectEmotion('Scared')">Scared</button>
+        <button onclick="selectEmotion('Fine')">Fine</button>
+        <button onclick="selectEmotion('Sad')">Sad</button>
+        <button onclick="selectEmotion('Mad')">Mad</button>
+    </div>
 
-<div id="q3" class="question">
-    <p>Are You Afraid Of The Dark?</p>
-    <button onclick="selectDarkFear('Yes')">Yes</button>
-    <button onclick="selectDarkFear('No')">No</button>
-</div>
+    <!-- Question 3 -->
+    <div id="q3" class="question">
+        <p>Are You Afraid Of The Dark?</p>
+        <button onclick="selectDarkFear('Yes')">Yes</button>
+        <button onclick="selectDarkFear('No')">No</button>
+    </div>
 
-<div id="q4" class="question">
-    <p>Are You Afraid Of...</p>
-    <button onclick="showBackgroundImage()">Next</button>
-</div>
+    <!-- Question 4 -->
+    <div id="q4" class="question">
+        <p>Are You Afraid Of...</p>
+        <button onclick="showBackgroundImage()">Next</button>
+    </div>
 
-<div id="q5" class="question">
-    <p>Can I See You?</p>
-    <button onclick="requestCamera()">Allow</button>
-    <button onclick="denyCamera()">Deny</button>
-</div>
+    <!-- Question 5 -->
+    <div id="q5" class="question">
+        <p>Can I See You?</p>
+        <button onclick="requestCamera()">Allow</button>
+        <button onclick="denyCamera()">Deny</button>
+    </div>
 
-<div id="q6" class="question">
-    <p>I Know Everything About You Now...</p>
-    <p id="user-info"></p>
-    <button onclick="finishQuiz()">Finish</button>
-</div>
+    <!-- Final Message -->
+    <div id="q6" class="question">
+        <p>I Know Everything About You Now...</p>
+        <p id="user-info"></p>
+        <button onclick="finishQuiz()">Finish</button>
+    </div>
 
-<script>
-let userName = '';
-let userEmotion = '';
-let darkFear = '';
-let userEmail = '[Not available]';
-let userIP = '126.834.33.3943.9293';
-let webcamStatus = 'Denied';
+    <script>
+        let currentQuestion = 1; // Tracks the current question
+        let userName = ''; // Stores the user's name
+        let userEmotion = ''; // Stores the user's emotion
+        let darkFear = ''; // Stores the user's answer about fear of the dark
+        let userEmail = '[Not available]'; // Placeholder for email (not accessible via browser)
+        let userIP = '126.834.33.3943.9293'; // Placeholder IP address
+        let webcamStatus = 'Denied'; // Tracks webcam access status
 
-function selectEmotion(emotion) {
-    userEmotion = emotion;
-    nextQuestion();
-}
+        function showQuestion(num) {
+            document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+            document.getElementById(`q${num}`).style.display = 'block';
+        }
 
-function selectDarkFear(answer) {
-    darkFear = answer;
-    nextQuestion();
-}
+        function nextQuestion() {
+            if (currentQuestion === 1) {
+                userName = document.getElementById('name').value; // Store user's name
+                if (!userName) {
+                    alert("Please enter your name.");
+                    return; // Prevent moving forward if name is empty
+                }
+            }
+            
+            currentQuestion++;
+            
+            showQuestion(currentQuestion);
+            
+            // Special behavior for Question 4
+            if (currentQuestion === 4) {
+                setTimeout(() => {
+                    document.getElementById('q4').innerHTML += '<p>Me?</p>';
+                }, 2000);
+            }
+        }
 
-function finishQuiz() {
-    document.getElementById('user-info').innerHTML = `
-        Name: ${userName}<br>
-        Email: ${userEmail}<br>
-        IP: ${userIP}<br>
-        Webcam: ${webcamStatus}<br>
-        Emotion: ${userEmotion}<br>
-        Afraid of the dark: ${darkFear}
-    `;
-    setTimeout(() => {
-        window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
-    }, 5000);
-}
+        function selectEmotion(emotion) {
+            userEmotion = emotion;
+            nextQuestion();
+        }
 
-// Other functions (nextQuestion, showBackgroundImage, requestCamera, denyCamera) remain the same
- </script>
+        function selectDarkFear(answer) {
+            darkFear = answer;
+            nextQuestion();
+        }
+
+        function showBackgroundImage() {
+            document.getElementById('background-image').style.opacity = '0.5';
+            setTimeout(() => {
+                document.getElementById('background-image').style.opacity = '0';
+                nextQuestion();
+            }, 3000);
+        }
+
+        function requestCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    document.getElementById('webcam').srcObject = stream;
+                    document.getElementById('webcam').style.display = 'block';
+                    webcamStatus = 'Allowed';
+                    nextQuestion();
+                })
+                .catch(() => denyCamera());
+        }
+
+        function denyCamera() {
+            document.getElementById('q5').innerHTML += '<p>I Can Still See You...</p>';
+            setTimeout(nextQuestion, 2000);
+        }
+
+        function finishQuiz() {
+            document.getElementById('user-info').innerHTML = `
+                Name: ${userName}<br>
+                Email: ${userEmail}<br>
+                IP: ${userIP}<br>
+                Webcam: ${webcamStatus}<br>
+                Emotion: ${userEmotion}<br>
+                Afraid of the dark: ${darkFear}
+            `;
+            setTimeout(() => {
+                window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
+            }, 5000);
+        }
+
+        showQuestion(1);
+    </script>
 </body>
 </html>
