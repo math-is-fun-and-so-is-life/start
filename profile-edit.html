@@ -74,14 +74,11 @@
 
             const profile = { username, bio, pfp };
             
-            // Get existing profiles or initialize an empty array
-            let profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+            // Save the profile directly with the username as the key
+            localStorage.setItem(username, JSON.stringify(profile));
             
-            // Add new profile
-            profiles.push(profile);
-            
-            // Save updated profiles array
-            localStorage.setItem('profiles', JSON.stringify(profiles));
+            // Update the logged in user if the username was changed
+            localStorage.setItem('loggedInUser', username);
             
             // Redirect to user list page
             window.location.href = 'user-list.html';
