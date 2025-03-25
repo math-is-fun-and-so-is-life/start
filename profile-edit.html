@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 400px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: linear-gradient(135deg, purple, maroon);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        input, textarea, button { display: block; width: 100%; margin-bottom: 10px; padding: 10px; }
+        #preview { max-width: 200px; max-height: 200px; margin: 10px auto; }
+        h1 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Edit Your Profile</h1>
+    <form id="profileForm">
+        <input type="file" id="pfp" accept="image/*">
+        <img id="preview" src="#" alt="Profile Picture Preview" style="display:none;">
+        <textarea id="bio" maxlength="200" placeholder="Enter your bio (max 200 characters)"></textarea>
+        <span id="charCount">0/200</span>
+        <button type="submit">Save Profile</button>
+    </form>
+
+    <script>
+        const pfp = document.getElementById('pfp');
+        const preview = document.getElementById('preview');
+        const bio = document.getElementById('bio');
+        const charCount = document.getElementById('charCount');
+
+        pfp.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        bio.addEventListener('input', function() {
+            charCount.textContent = `${this.value.length}/200`;
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would send this data to a server
+            console.log('Profile saved!');
+            // Redirect to user list page
+            window.location.href = 'user-list.html';
+        });
+    </script>
+</body>
+</html>
