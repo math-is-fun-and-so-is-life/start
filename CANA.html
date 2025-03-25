@@ -49,12 +49,24 @@
             if (captchaInput === captchaText) {
                 // In a real application, you would send this data to a server
                 console.log('Sign up successful!');
+                
+                // Store login state
+                localStorage.setItem('loggedInUser', username);
+                
                 // Redirect to profile edit page
                 window.location.href = 'profile-edit.html';
             } else {
                 alert('Captcha incorrect. Please try again.');
                 captchaText = generateCaptcha();
                 document.getElementById('captcha').textContent = captchaText;
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                window.location.href = 'profile-edit.html';
             }
         });
     </script>
