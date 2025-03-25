@@ -74,7 +74,7 @@
     <div id="q1" class="question">
         <label for="name">What's Your Name?</label><br>
         <input type="text" id="name" required>
-        <button onclick="nextQuestion()">Next</button>
+        <button onclick="validateAndNextQuestion()">Next</button>
     </div>
 
     <!-- Question 2 -->
@@ -128,15 +128,21 @@
             document.getElementById(`q${num}`).style.display = 'block';
         }
 
-        function nextQuestion() {
-            if (currentQuestion === 1) {
-                userName = document.getElementById('name').value; // Store user's name
-                if (!userName) {
-                    alert("Please enter your name.");
-                    return; // Prevent moving forward if name is empty
-                }
+        function validateAndNextQuestion() {
+            userName = document.getElementById('name').value.trim();
+            if (isValidName(userName)) {
+                nextQuestion();
+            } else {
+                alert("Please enter a valid name.");
             }
-            
+        }
+
+        function isValidName(name) {
+            // Check if the name contains at least two characters and only letters, spaces, hyphens, and apostrophes
+            return /^[a-zA-Z\s\-']{2,}$/.test(name);
+        }
+
+        function nextQuestion() {
             currentQuestion++;
             showQuestion(currentQuestion);
         }
@@ -189,7 +195,7 @@
         function finishQuiz() {
             document.getElementById('user-info').innerHTML = `
                 Name: ${userName}<br>
-                Location: ${userDistrict}<br>
+                District: ${userDistrict}<br>
                 IP: ${userIP}<br>
                 Location: ${userLocation}<br>
                 Webcam: ${webcamStatus}<br>
