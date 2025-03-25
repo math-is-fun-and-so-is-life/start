@@ -85,8 +85,15 @@
         const modal = document.getElementById('profileModal');
         const modalContent = document.getElementById('modalContent');
 
-        // Get profiles from localStorage
-        const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+        // Get all profiles from localStorage
+        const profiles = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key !== 'loggedInUser') {
+                const profile = JSON.parse(localStorage.getItem(key));
+                profiles.push(profile);
+            }
+        }
 
         profiles.forEach((profile, index) => {
             const userCard = document.createElement('div');
