@@ -25,18 +25,30 @@
 <body>
     <h1>Edit Your Profile</h1>
     <form id="profileForm">
+        <input type="text" id="username" placeholder="Username" required>
         <input type="file" id="pfp" accept="image/*">
         <img id="preview" src="#" alt="Profile Picture Preview" style="display:none;">
         <textarea id="bio" maxlength="200" placeholder="Enter your bio (max 200 characters)"></textarea>
         <span id="charCount">0/200</span>
         <button type="submit">Save Profile</button>
     </form>
+    <button id="logoutBtn">Logout</button>
 
     <script>
+        // Check if user is logged in
+        const loggedInUser = localStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
+            window.location.href = 'signup.html';
+        }
+
         const pfp = document.getElementById('pfp');
         const preview = document.getElementById('preview');
         const bio = document.getElementById('bio');
         const charCount = document.getElementById('charCount');
+        const username = document.getElementById('username');
+
+        // Set username from logged in user
+        username.value = loggedInUser;
 
         pfp.addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -56,10 +68,28 @@
 
         document.getElementById('profileForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // In a real application, you would send this data to a server
-            console.log('Profile saved!');
+            const username = document.getElementById('username').value;
+            const bio = document.getElementById('bio').value;
+            const pfp = document.getElementById('preview').src;
+
+            const profile = { username, bio, pfp };
+            
+            // Get existing profiles or initialize an empty array
+            let profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+            
+            // Add new profile
+            profiles.push(profile);
+            
+            // Save updated profiles array
+            localStorage.setItem('profiles', JSON.stringify(profiles));
+            
             // Redirect to user list page
             window.location.href = 'user-list.html';
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'signup.html';
         });
     </script>
 </body>
