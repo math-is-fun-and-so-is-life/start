@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 400px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: linear-gradient(135deg, purple, maroon);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        input, button { display: block; width: 100%; margin-bottom: 10px; padding: 10px; }
+        #captcha { font-style: italic; background-color: rgba(255,255,255,0.2); padding: 10px; text-align: center; }
+        h1 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <div id="captcha"></div>
+        <input type="text" id="captchaInput" placeholder="Enter captcha" required>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        function generateCaptcha() {
+            return Math.random().toString(36).substr(2, 6);
+        }
+
+        let captchaText = generateCaptcha();
+        document.getElementById('captcha').textContent = captchaText;
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const captchaInput = document.getElementById('captchaInput').value;
+
+            if (captchaInput === captchaText) {
+                // In a real application, you would send this data to a server
+                console.log('Sign up successful!');
+                // Redirect to profile edit page
+                window.location.href = 'profile-edit.html';
+            } else {
+                alert('Captcha incorrect. Please try again.');
+                captchaText = generateCaptcha();
+                document.getElementById('captcha').textContent = captchaText;
+            }
+        });
+    </script>
+</body>
+</html>
