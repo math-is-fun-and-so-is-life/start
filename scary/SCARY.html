@@ -71,14 +71,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 10;
             justify-content: center;
             align-items: center;
         }
         #loading img {
-            width: 100px; /* Adjust as needed */
-            height: 100px; /* Adjust as needed */
+            width: 100px;
+            height: 100px;
         }
         #image-cycle {
             position: fixed;
@@ -148,7 +148,7 @@
     <div id="q6" class="question">
         <p>You're at Gunn Junior High right now, right?</p>
         <button onclick="gunnYes()">Yes</button>
-        <button onclick="nextQuestion()">Yes</button> <!-- Duplicate "Yes" Button -->
+        <button onclick="nextQuestion()">Yes</button>
     </div>
 
     <!-- Question 7 -->
@@ -162,12 +162,12 @@
     <div id="q8" class="question">
         <p>Am I Right Behind You?</p>
         <button onclick="behindYes()">Yes</button>
-        <button onclick="behindYes()">Yes</button> <!-- Duplicate "Yes" Button -->
+        <button onclick="behindYes()">Yes</button>
     </div>
 
     <!-- Question 9 -->
     <div id="q9" class="question">
-        <p id="typewriter">Do you ever wake up in the middle of the night because you feel someone staring at you?</p>
+        <p id="typewriter"></p>
     </div>
 
     <!-- Final Message -->
@@ -184,14 +184,14 @@
     </div>
 
     <script>
-        let currentQuestion = 1; // Tracks the current question
-        let userName = ''; // Stores the user's name
-        let userEmotion = ''; // Stores the user's emotion
-        let darkFear = ''; // Stores the user's answer about fear of the dark
-        let userDistrict = '[AISD]'; // Placeholder for email (not accessible via browser)
-        let userIP = '126.834.33.3943.9293'; // Placeholder IP address
-        let userLocation = 'Gunn Junior High'; // Placeholder IP address
-        let webcamStatus = 'Denied'; // Tracks webcam access status
+        let currentQuestion = 1;
+        let userName = '';
+        let userEmotion = '';
+        let darkFear = '';
+        let userDistrict = '[AISD]';
+        let userIP = '126.834.33.3943.9293';
+        let userLocation = 'Gunn Junior High';
+        let webcamStatus = 'Denied';
         let typewriterText = "Do you ever wake up in the middle of the night because you feel someone staring at you?";
         let typewriterIndex = 0;
         const gunnImages = [
@@ -239,7 +239,6 @@
         }
 
         function isValidName(name) {
-            // Check if the name contains at least two characters and only letters, spaces, hyphens, and apostrophes
             return /^[a-zA-Z\s\-']{2,}$/.test(name);
         }
 
@@ -259,18 +258,11 @@
         }
 
         function showBackgroundImage() {
-            // Remove the "Next" button
             document.getElementById('q4-next-button').style.display = 'none';
-
-            // Show the background image
             document.getElementById('background-image').style.opacity = '0.5';
-
-            // Add "Me?" text after 2 seconds
             setTimeout(() => {
                 document.getElementById('q4').innerHTML += '<p>Me?</p>';
             }, 2000);
-
-            // Hide the background image and move to next question after 5 seconds
             setTimeout(() => {
                 document.getElementById('background-image').style.opacity = '0';
                 nextQuestion();
@@ -293,27 +285,6 @@
             setTimeout(nextQuestion, 2000);
         }
 
-        function startFinish() {
-            document.getElementById('loading').style.display = 'flex'; // Show loading GIF
-            setTimeout(finishQuiz, 3000); // Delay the quiz completion
-        }
-
-        function finishQuiz() {
-            document.getElementById('loading').style.display = 'none'; // Hide loading GIF
-            document.getElementById('user-info').innerHTML = `
-                Name: ${userName}<br>
-                District: ${userDistrict}<br>
-                IP: ${userIP}<br>
-                Location: ${userLocation}<br>
-                Webcam: ${webcamStatus}<br>
-                Emotion: ${userEmotion}<br>
-                Afraid of the dark: ${darkFear}
-            `;
-            setTimeout(() => {
-                window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
-            }, 5000);
-        }
-
         function gunnYes() {
             showImageCycle(gunnImages, 2000);
             nextQuestion();
@@ -333,7 +304,7 @@
             const interval = setInterval(() => {
                 cycleImage.src = images[i];
                 i = (i + 1) % images.length;
-            }, 100); // Change image every 100ms
+            }, 100);
 
             setTimeout(() => {
                 clearInterval(interval);
@@ -349,12 +320,39 @@
             if (typewriterIndex < typewriterText.length) {
                 document.getElementById("typewriter").textContent += typewriterText.charAt(typewriterIndex);
                 typewriterIndex++;
-                setTimeout(startTypewriter, 50); // Adjust speed here
+                setTimeout(startTypewriter, 50);
             }
         }
 
         function showFinishButton() {
             document.getElementById('finishButton').style.display = 'inline-block';
+        }
+
+        function startFinish() {
+            document.getElementById('loading').style.display = 'flex';
+            setTimeout(finishQuiz, 3000);
+        }
+
+        function finishQuiz() {
+            document.getElementById('loading').style.display = 'none';
+            document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+            
+            let infoDiv = document.createElement('div');
+            infoDiv.innerHTML = `
+                <h2>I Know Everything About You Now...</h2>
+                <p>Name: ${userName}</p>
+                <p>District: ${userDistrict}</p>
+                <p>IP: ${userIP}</p>
+                <p>Location: ${userLocation}</p>
+                <p>Webcam: ${webcamStatus}</p>
+                <p>Emotion: ${userEmotion}</p>
+                <p>Afraid of the dark: ${darkFear}</p>
+            `;
+            document.body.appendChild(infoDiv);
+
+            setTimeout(() => {
+                window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
+            }, 5000);
         }
 
         showQuestion(1);
