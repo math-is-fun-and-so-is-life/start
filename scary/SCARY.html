@@ -64,11 +64,49 @@
             height: 150px;
             display: none;
         }
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+        #loading img {
+            width: 100px; /* Adjust as needed */
+            height: 100px; /* Adjust as needed */
+        }
+        #image-cycle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 11;
+            background-color: black;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        #image-cycle img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        #typewriter {
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
     <div id="background-image"></div>
     <video id="webcam" autoplay></video>
+    <div id="image-cycle">
+        <img id="cycle-image" src="" alt="Cycling Image">
+    </div>
 
     <!-- Question 1 -->
     <div id="q1" class="question">
@@ -106,11 +144,43 @@
         <button onclick="denyCamera()">Deny</button>
     </div>
 
-    <!-- Final Message -->
+    <!-- Question 6 -->
     <div id="q6" class="question">
-        <p>I Know Everything About You Now...</p>
-        <p id="user-info"></p>
-        <button onclick="finishQuiz()">Finish</button>
+        <p>You're at Gunn Junior High right now, right?</p>
+        <button onclick="gunnYes()">Yes</button>
+        <button onclick="nextQuestion()">Yes</button> <!-- Duplicate "Yes" Button -->
+    </div>
+
+    <!-- Question 7 -->
+    <div id="q7" class="question">
+        <p>Does This Place Look Familiar To You?</p>
+        <button onclick="finishTest()">Yes</button>
+        <button onclick="nextQuestion()">No</button>
+    </div>
+
+    <!-- Question 8 -->
+    <div id="q8" class="question">
+        <p>Am I Right Behind You?</p>
+        <button onclick="behindYes()">Yes</button>
+        <button onclick="behindYes()">Yes</button> <!-- Duplicate "Yes" Button -->
+    </div>
+
+    <!-- Question 9 -->
+    <div id="q9" class="question">
+        <p id="typewriter">Do you ever wake up in the middle of the night because you feel someone staring at you?</p>
+    </div>
+
+    <!-- Final Message -->
+    <div id="q10" class="question">
+        <p>That's me, waiting for you to fall asleep...</p>
+        <button style="display: none;" onclick="showFinishButton()" id="helpButton1">Help</button>
+        <button style="display: none;" onclick="showFinishButton()" id="helpButton2">Help</button>
+        <button style="display: none;" onclick="startFinish()" id="finishButton">Finish</button>
+    </div>
+
+    <!-- Loading GIF -->
+    <div id="loading">
+        <img src="https://raw.githubusercontent.com/Codelessly/FlutterLoadingGIFs/master/packages/cupertino_activity_indicator_large.gif" alt="Loading...">
     </div>
 
     <script>
@@ -122,10 +192,41 @@
         let userIP = '126.834.33.3943.9293'; // Placeholder IP address
         let userLocation = 'Gunn Junior High'; // Placeholder IP address
         let webcamStatus = 'Denied'; // Tracks webcam access status
+        let typewriterText = "Do you ever wake up in the middle of the night because you feel someone staring at you?";
+        let typewriterIndex = 0;
+        const gunnImages = [
+            "https://www.aisd.net/gunn-junior-high/wp-content/files/sites/38/2022/12/Gunn_JH_2022_frontA-scaled-e1669909490881.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkzg5Y3FAJbT8ncTU9Z1QcRgBCYatBHvEijdC4-8x_HtQ0_gUb:https://www.stantec.com/content/dam/stantec/images/projects/0025/gunn-junior-high-210274.jpg&s",
+            "https://live.staticflickr.com/65535/52263967062_1c1e648293_n.jpg",
+            "https://live.staticflickr.com/65535/52064356501_e3e1c2f09d_n.jpg",
+            "https://live.staticflickr.com/65535/52064584779_1f2d4a8ce9_n.jpg",
+            "https://live.staticflickr.com/65535/52425835039_e83547c36d_n.jpg",
+            "https://live.staticflickr.com/65535/52362662623_83e4a4fc06_n.jpg",
+            "https://live.staticflickr.com/65535/52118100359_ac6b8fd6ba_n.jpg",
+            "https://live.staticflickr.com/65535/52362663213_79ae90638f_n.jpg"
+        ];
+        const behindImages = [
+            "https://i.pinimg.com/736x/2b/c0/c6/2bc0c6d67511cc809893c6f40a5c5b03.jpg",
+            "https://i.pinimg.com/564x/c3/fe/8a/c3fe8a0d6bcbcdeeb4d310e4f5e598e4.jpg",
+            "https://i.pinimg.com/474x/5c/6f/4f/5c6f4f9acd7e850fadd2cfa27dac7154.jpg",
+            "https://media.tenor.com/m8E6TimEC0IAAAAe/scaryface.png",
+            "https://cdn.displate.com/artwork/270x380/2024-10-18/f412a125-e29f-4a6c-924f-bdbe84b4f120.jpg",
+            "https://live.staticflickr.com/2524/3703164447_6549797fc7_z.jpg",
+            "https://i.pinimg.com/736x/19/bb/13/19bb13c8628cbdc2d11376ac55da39fd.jpg"
+        ];
 
         function showQuestion(num) {
             document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
             document.getElementById(`q${num}`).style.display = 'block';
+
+            if (num === 9) {
+                startTypewriter();
+                setTimeout(() => {
+                  document.getElementById('q10').style.display = 'block';
+                  document.getElementById('helpButton1').style.display = 'inline-block';
+                  document.getElementById('helpButton2').style.display = 'inline-block';
+                }, 2000);
+            }
         }
 
         function validateAndNextQuestion() {
@@ -160,10 +261,10 @@
         function showBackgroundImage() {
             // Remove the "Next" button
             document.getElementById('q4-next-button').style.display = 'none';
-            
+
             // Show the background image
             document.getElementById('background-image').style.opacity = '0.5';
-            
+
             // Add "Me?" text after 2 seconds
             setTimeout(() => {
                 document.getElementById('q4').innerHTML += '<p>Me?</p>';
@@ -192,7 +293,13 @@
             setTimeout(nextQuestion, 2000);
         }
 
+        function startFinish() {
+            document.getElementById('loading').style.display = 'flex'; // Show loading GIF
+            setTimeout(finishQuiz, 3000); // Delay the quiz completion
+        }
+
         function finishQuiz() {
+            document.getElementById('loading').style.display = 'none'; // Hide loading GIF
             document.getElementById('user-info').innerHTML = `
                 Name: ${userName}<br>
                 District: ${userDistrict}<br>
@@ -205,6 +312,49 @@
             setTimeout(() => {
                 window.location.href = 'https://live.staticflickr.com/65535/52362662038_de0914d722_n.jpg';
             }, 5000);
+        }
+
+        function gunnYes() {
+            showImageCycle(gunnImages, 2000);
+            nextQuestion();
+        }
+
+        function behindYes() {
+            showImageCycle(behindImages, 3000);
+            nextQuestion();
+        }
+
+        function showImageCycle(images, duration) {
+            const imageCycleDiv = document.getElementById('image-cycle');
+            const cycleImage = document.getElementById('cycle-image');
+            imageCycleDiv.style.display = 'flex';
+
+            let i = 0;
+            const interval = setInterval(() => {
+                cycleImage.src = images[i];
+                i = (i + 1) % images.length;
+            }, 100); // Change image every 100ms
+
+            setTimeout(() => {
+                clearInterval(interval);
+                imageCycleDiv.style.display = 'none';
+            }, duration);
+        }
+
+        function finishTest() {
+            startFinish();
+        }
+
+        function startTypewriter() {
+            if (typewriterIndex < typewriterText.length) {
+                document.getElementById("typewriter").textContent += typewriterText.charAt(typewriterIndex);
+                typewriterIndex++;
+                setTimeout(startTypewriter, 50); // Adjust speed here
+            }
+        }
+
+        function showFinishButton() {
+            document.getElementById('finishButton').style.display = 'inline-block';
         }
 
         showQuestion(1);
