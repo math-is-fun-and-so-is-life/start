@@ -67,13 +67,22 @@
     }
 
     /* Section for GD Files */
-    .files {
+    .files, .albums {
       margin: 20px;
     }
 
     iframe {
       margin: 10px 0;
       border: none;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin: 5px 0;
     }
   </style>
 </head>
@@ -102,6 +111,27 @@
     <h2>Watch These Videos</h2>
     <iframe src="https://drive.google.com/file/d/12MAQdqSxmI66seMgsaDQKTMrzGNv9GkE/preview" width="800" height="450"></iframe>
     <iframe src="https://drive.google.com/file/d/12MnPVzZYcON3FKt1wF8NweKm_MgibYOm/preview" width="800" height="450"></iframe>
+    <iframe src="https://drive.google.com/file/d/13CbWARGPIl96lmmBNZKIzAohgwLTDiN3/preview" width="800" height="450"></iframe>
+    <iframe src="https://drive.google.com/file/d/1-eMeLf93WRVdZzFCy91dnj00tiFzY7s3/preview" width="800" height="450"></iframe>
+    <iframe src="https://drive.google.com/file/d/1AkNDqSej2pFI44YBNVCY-EGaUlFZFgRo/preview" width="800" height="450"></iframe>
+    <iframe src="https://drive.google.com/file/d/1-TL55bRj9de7_fpuw1ULXPgmRzpz_61o/preview" width="800" height="450"></iframe>
+    <iframe src="https://drive.google.com/file/d/1-kjseaN9KBhdlyZ8rveKoio8uMgeKhkQ/preview" width="800" height="450"></iframe>
+  </section>
+
+  <!-- Dropdown for Albums -->
+  <section class="albums">
+    <h2>ALBUMS</h2>
+    <select id="albumDropdown" onchange="showAlbumVideo()">
+      <option value="">Select an album</option>
+      <option value="12MAQdqSxmI66seMgsaDQKTMrzGNv9GkE">Chromakopia</option>
+      <option value="12MnPVzZYcON3FKt1wF8NweKm_MgibYOm">IGOR</option>
+      <option value="13CbWARGPIl96lmmBNZKIzAohgwLTDiN3">Wolf</option>
+      <option value="1-eMeLf93WRVdZzFCy91dnj00tiFzY7s3">Flower Boy</option>
+      <option value="1AkNDqSej2pFI44YBNVCY-EGaUlFZFgRo">Cherry Bomb</option>
+      <option value="1-TL55bRj9de7_fpuw1ULXPgmRzpz_61o">Call Me If You Get Lost</option>
+      <option value="1-kjseaN9KBhdlyZ8rveKoio8uMgeKhkQ">Bastard</option>
+    </select>
+    <iframe id="albumVideo" style="display: none;" width="800" height="450" frameborder="0"></iframe>
   </section>
 
   <script>
@@ -123,6 +153,19 @@
     function previousImage() {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
       showImage(currentIndex);
+    }
+
+    // Dropdown Functionality for Albums
+    function showAlbumVideo() {
+      const dropdown = document.getElementById('albumDropdown');
+      const iframe = document.getElementById('albumVideo');
+
+      if (dropdown.value) {
+        iframe.src = `https://drive.google.com/file/d/${dropdown.value}/preview`;
+        iframe.style.display = 'block'; // Show the iframe
+      } else {
+        iframe.style.display = 'none'; // Hide the iframe if no album is selected
+      }
     }
   </script>
 </body>
