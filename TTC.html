@@ -66,23 +66,14 @@
       right: 10px;
     }
 
-    /* Section for GD Files */
-    .files, .albums {
+    /* Albums Section */
+    .albums, .extra-text, .additional {
       margin: 20px;
     }
 
     iframe {
       margin: 10px 0;
       border: none;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    ul li {
-      margin: 5px 0;
     }
   </style>
 </head>
@@ -106,21 +97,15 @@
     <img src="https://ca-times.brightspotcdn.com/dims4/default/b1ace64/2147483647/strip/true/crop/1867x2800+1202+0/resize/2000x3000!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe2%2Fbc%2Fe9a9a7f848bea1d3fd6bf5cf00bc%2Fgettyimages-1236582923.jpg">
   </div>
 
-  <!-- Section for GD Files -->
-  <section class="files">
-    <h2>Watch These Videos</h2>
-    <iframe src="https://drive.google.com/file/d/12MAQdqSxmI66seMgsaDQKTMrzGNv9GkE/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/12MnPVzZYcON3FKt1wF8NweKm_MgibYOm/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/13CbWARGPIl96lmmBNZKIzAohgwLTDiN3/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/1-eMeLf93WRVdZzFCy91dnj00tiFzY7s3/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/1AkNDqSej2pFI44YBNVCY-EGaUlFZFgRo/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/1-TL55bRj9de7_fpuw1ULXPgmRzpz_61o/preview" width="800" height="450"></iframe>
-    <iframe src="https://drive.google.com/file/d/1-kjseaN9KBhdlyZ8rveKoio8uMgeKhkQ/preview" width="800" height="450"></iframe>
+  <!-- Extra Text Section -->
+  <section class="extra-text">
+    <h2>Extra Information</h2>
+    <p>Tyler, The Creator, whose real name is Tyler Gregory Okonma, is a multifaceted artist celebrated for his contributions to music, fashion, and creativity. Born on March 6, 1991, in Hawthorne, California, Tyler rose to fame as the co-founder of the hip-hop collective Odd Future. His career began with his self-produced debut mixtape, Bastard, in 2009, followed by his breakthrough album Goblin in 2011, which featured the hit single "Yonkers". Tyler's musical style evolved significantly over the years, transitioning from horrorcore influences to a fusion of jazz, soul, and R&B. Albums like Flower Boy (2017), IGOR (2019), and Call Me If You Get Lost (2021) showcased his versatility and earned him critical acclaim, including two Grammy Awards for Best Rap Album2. Beyond music, Tyler is a prominent figure in fashion, founding the brands Golf Wang and GOLF le FLEUR*. He has collaborated with major names like Converse and Lacoste, and his designs reflect his bold and unique aesthetic2. Tyler is also known for his vibrant personality and creative ventures, including the annual Camp Flog Gnaw Carnival, which attracts music lovers worldwide. His latest album, Chromakopia (2024), debuted at number one, marking another milestone in his illustrious career.</p>
   </section>
 
   <!-- Dropdown for Albums -->
   <section class="albums">
-    <h2>ALBUMS</h2>
+    <h2>Watch These Albums</h2>
     <select id="albumDropdown" onchange="showAlbumVideo()">
       <option value="">Select an album</option>
       <option value="12MAQdqSxmI66seMgsaDQKTMrzGNv9GkE">Chromakopia</option>
@@ -132,6 +117,12 @@
       <option value="1-kjseaN9KBhdlyZ8rveKoio8uMgeKhkQ">Bastard</option>
     </select>
     <iframe id="albumVideo" style="display: none;" width="800" height="450" frameborder="0"></iframe>
+  </section>
+
+  <!-- Additional Video -->
+  <section class="additional">
+    <h2>Sadly</h2>
+    <iframe src="https://drive.google.com/file/d/1QJr9UYsqK4vMdATaeWZfxL_cVNddBOnY/preview" width="800" height="450" frameborder="0"></iframe>
   </section>
 
   <script>
