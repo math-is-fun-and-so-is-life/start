@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tyler, The Creator</title>
+  <style>
+    /* Gradient Background */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, blue, pink, green, grey);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Image Carousel */
+    .carousel {
+      position: relative;
+      width: 80%;
+      max-width: 800px;
+      height: 400px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none; /* Hide all images initially */
+    }
+
+    .carousel img.active {
+      display: block; /* Show the active image */
+    }
+
+    .carousel .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      padding: 10px;
+      z-index: 10;
+    }
+
+    .carousel .arrow.left {
+      left: 10px;
+    }
+
+    .carousel .arrow.right {
+      right: 10px;
+    }
+
+    /* Section for GD Files */
+    .videos {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tyler, The Creator</h1>
+    <p>Celebrating creativity and genius!</p>
+  </header>
+
+  <!-- Image Carousel -->
+  <div class="carousel">
+    <button class="arrow left" onclick="previousImage()">&#9664;</button>
+    <button class="arrow right" onclick="nextImage()">&#9654;</button>
+    <img src="https://www.billboard.com/wp-content/uploads/2024/11/tyler-the-creator-boston-wharf-2024-billboard-1548.jpg" class="active">
+    <img src="https://ew.com/thmb/DGevptt1W-VO6bx7X_JREHaKaxk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-1152972116-2000-921c5e624d6940849479462f248c43f4.jpg">
+    <img src="https://static.wikia.nocookie.net/ace-the-creator/images/f/f1/Tyler%2C_The_Creator.jpg">
+    <img src="https://i0.wp.com/www.passionweiss.com/wp-content/uploads/2021/07/tyler-the-creator-call-me-if-you-get-lost-album-review-passion-weiss.jpg">
+    <img src="https://i1.sndcdn.com/artworks-4kHxmxmUfUZGnHfv-mP2XNQ-t500x500.jpg">
+    <img src="https://www.usatoday.com/gcdn/-mm-/5367a8ddcfb9c1f4d81b7884d83903b596f09e0d/c=15-0-465-600/local/-/media/USATODAY/GenericImages/2014/03/16//1394994103000-AP-Music-Tyler-The-Creator-Arrest.jpg">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR47umB0lzSc3G0pQDiTjP8x0-iMKSKZeJouDujju4IMpIVt9Ad:https://upload.wikimedia.org/wikipedia/commons/7/71/Tyler_the_Creator_%252852163761341%2529_%2528cropped%2529.jpg">
+  </div>
+
+  <!-- Section for GD Files -->
+  <section class="videos">
+    <h2>His Most Popular Albums</h2>
+    <video width="800" controls autoplay>
+      <source src="https://drive.google.com/file/d/12MAQdqSxmI66seMgsaDQKTMrzGNv9GkE/preview" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    <video width="800" controls autoplay>
+      <source src="https://drive.google.com/file/d/12MnPVzZYcON3FKt1wF8NweKm_MgibYOm/preview" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
+  <script>
+    // Carousel Functionality
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.carousel img');
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }
+
+    function previousImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    }
+  </script>
+</body>
+</html>
